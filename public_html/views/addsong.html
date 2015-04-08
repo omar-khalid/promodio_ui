@@ -1,0 +1,155 @@
+<div class="wrapper" ng-controller="AddSongController" id="add-song-controller" >
+    <div class="col-xs-12 col-sm-12 col-lg-10 col-lg-offset-1 col-md-12" style="padding-bottom:100px;">
+        <div  class="col-xs-7 col-xs-offset-5 col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-offset-4 col-sm-8">
+            <h3 class="text-center">Add Song</h3>
+            <hr>
+        </div>
+        <div class="col-xs-5 col-sm-4 col-lg-3 col-md-3">
+            <div class="col-xs-12">
+                <img ng-src="{{iconImageUrl !== '' && iconImageUrl|| 'images/cover-image.jpg'}}" class="image-responsive" ng-show="audioFlags.invalidImageFileFlag"/>
+                <img id="songImage" src="images/cover-image.jpg" class="image-responsive" ng-show="!audioFlags.invalidImageFileFlag"/>
+                <div class="col-xs-12">&nbsp;</div>
+                <!--<span>-->
+                <button class="btn btn-signup btn-block" onclick="getImageFile()">BROWSE PICTURE
+                    <input id="image-file"  accept=".png,.jpg" style="display: none;"  file-model="imageFile" name="image_file" type="file"  onchange="loadImageFile(event)" />
+                </button>
+                <!--</span>-->
+            </div>
+        </div>
+        <div class="col-xs-7 col-sm-8 col-lg-9 col-md-9">
+
+            <div class="row" ng-if="$parent.validations.length > 0">
+                <div class="col-xs-12 col-md-12">
+                    <div ag-alert></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-10 col-lg-8">
+                    <form role="form" name="addsongform">
+                        <div class="form-group">
+                            <label for="songName">Songs name </label>
+                            <div class="input-inner-addon "><i class="fa fa-music brand-col"></i>
+                                <input type="text" disabled="true" ng-model="songName" class="form-control" id="songName" name="songName">
+                            </div>
+                            <!--<span class="text-danger" ng-show="addsongform.songName.$error.required && submitted">Provide a song name</span>-->
+                        </div>
+                        <div class="form-group">            
+                            <div class="row">
+                                <div class="col-xs-12 text-cut">
+                                    <button class="btn btn-promod" onclick="getAudioFile()">Browse File
+                                        <input id="audio-file" accept=".mp3" style="display: none;" file-model="audioFile" name="audio_file" type="file" onchange="loadAudioFile(event)" />
+                                    </button>
+                                    &nbsp;<span class="text-promod">{{selectedSongFullName}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div  class="col-xs-12">
+                    <hr>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="agreeCondition" ng-change="termsAndConditionsChanged(agreeCondition)"> I agree with Terms and Conditions
+                        </label>
+                        <br><br>
+                        <p><i>You may only upload songs that you own, created and/or have full reproductions right over. Any unauthorized upload of copyrighted conent will be in violation of terms of use</i></p>
+                    </div>
+                    <hr>  
+
+                    <div ng-show="progressVisible">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-10 col-lg-8">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"  ng-style="{'width': progress + '%'}"> {{progress}}% </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button class="btn btn-promod" ng-click="showTermsAndNConditions();"  ng-disabled="audioFlags.invalidAudioFileFlag===true || agreeConditions===false">Upload</button>
+                            <button class="btn btn-disable" ng-click="cancel()">Cancel</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="clearfix"></div>
+
+    <div ng-include src="'views/common/innerfooter.html'"></div>
+
+<div class="clearfix"></div>
+
+<!--Terms & conditions Modal-->
+<div class="modal fade" id="termsAndConditionsModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="col-xs-12 text-center form-group"><img src="images/promodIO-logo.png"/></div>
+                <div class="col-xs-12 text-center signup-band">Terms & Conditions</div>
+                <div class="col-xs-12 spacer30">                    
+                    <div class="col-xs-12  text-justify">                        
+                            You are only allowed to upload music that you have full ownership or explicit permission have been obtained. You are NOT allowed to upload any content or material that violates, plagiarizes, misappropriates, or infringes the rights of third parties including, without limitation, copyright, trademark rights, rights of privacy or publicity, confidential information or any other content that violates any law or regulation, or unauthorized advertising or promotional message, offensive, or anything that is deemed as unreasonable by us.
+                        
+                    </div>
+                    <div class="col-xs-12">&nbsp;&nbsp;</div>
+                    <div class="col-xs-12 text-center">
+                        <button class="btn btn-disable" ng-click="disagreeConditions();">disagree</button>
+                        &nbsp;&nbsp;
+                        <button class="btn btn-promod" ng-click="acceptAllConditions();">i agree</button>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+</div>
+<!--Terms & conditions Modal-->
+
+<script>
+            var getAudioFile = function() {
+
+                document.getElementById("audio-file").click();
+            };
+
+            var getImageFile = function() {
+
+                document.getElementById("image-file").click();
+            };
+
+            var loadImageFile = function(event) {
+
+                var reader = new FileReader();
+
+                reader.onload = function() {
+                    var output = document.getElementById('songImage');
+                    output.src = reader.result;
+                };
+
+                if (event.target.files[0] !== undefined)
+                {
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+
+                angular.element(document.getElementById('add-song-controller')).scope().profileImageChanged(document.getElementById("image-file").value);
+            };
+
+            var loadAudioFile = function(event) {
+
+                var reader = new FileReader();
+
+                reader.onload = function() {
+                };
+
+                angular.element(document.getElementById('add-song-controller')).scope().songChanged(document.getElementById("audio-file").value);
+            };
+</script>

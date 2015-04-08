@@ -1,0 +1,61 @@
+.link-disabled{
+    cursor: not-allowed;
+}
+.track-progress{
+    cursor: progress;
+}
+.avtaar-img-large {
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	display: inline-block;
+	/* float: left; */
+        border:  #fff 8px solid;
+        background-color: #fff;
+}
+.no-bullet{
+    list-style-type: none;
+}
+.text-promoter{
+    font-size: 14pt;
+    color: #f1f1f1;
+    font-weight: bold;
+}
+.banner-image{
+    height: 259px; 
+    width: 100%;
+}
+.playlist-image{
+    height: 150px;
+    width: 100%;
+}
+.text-promod{
+    color: #f48282;
+}
+
+.text-cut {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.time-elapse {
+    margin-top: 18px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.img-responsive-icon{
+    display: block;
+    max-width: 100%;
+    height: 100%;
+}
+
+.btn{ 
+    outline:none;
+}

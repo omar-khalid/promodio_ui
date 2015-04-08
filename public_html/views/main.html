@@ -1,0 +1,286 @@
+<!-- Signin-page-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="col-xs-12 text-center form-group"><img src="images/promodIO-logo.png"/></div>
+                <div class="col-xs-12 text-center signup-band">SIGN IN</div>
+                <div class="col-xs-12  spacer30">
+                    <div class="row">
+                        <div class="col-xs-6 social-icn ">
+                            <span class="fb-circle"><i class="fa fa-facebook text-primary"></i></span> Sign in with facebook 
+                        </div> 
+                        <div class="col-xs-6 social-icn ">
+                            <span class="twitter-circle"> <i class="fa fa-twitter text-info"></i></span>
+                            Sign in with twitter 
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="signup-form">
+                    <div class="col-xs-12  text-center"><h3> or </h3></div>
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Your E-mail	</label>
+                                <div class="input-inner-addon "><i class="fa fa-user brand-col"></i>
+                                    <input type="text" class="form-control" id="exampleInputAmount" placeholder="Enter Your E-mail Adress">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <div class="input-inner-addon "> <i class="fa fa-unlock-alt brand-col"></i>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 text-center spacer30">
+                                    <button class="btn btn-signup">SIGN IN</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Signin-page--> 
+
+<!-- signup-page-->
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="col-xs-12 text-center form-group"><img src="images/promodIO-logo.png"/></div>
+                <div class="col-xs-12 text-center signup-band">Sign up</div>
+                <div class="col-xs-10 col-xs-offset-1 spacer30">
+                    <div class="row">
+                        <div class="col-xs-6 social-icn ">
+                            <span class="fb-circle"><i class="fa fa-facebook text-primary"></i></span> Sign in with facebook 
+                        </div> 
+                        <div class="col-xs-6 social-icn ">
+                            <span class="twitter-circle"> <i class="fa fa-twitter text-info"></i></span>
+                            Sign in with twitter 
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="signup-form">
+                    <div class="col-xs-12  text-center"><h3> or </h3></div>
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <div ag-alert></div>
+                    </div>
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <form role="form" name="userform" novalidate autocomplete="off">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Your E-mail	</label>
+                                <div>  
+                                    <div class="input-inner-addon "> <i class="fa fa-user brand-col"></i>
+                                        <input type="text" ng-model="user.username" required name="username" class="form-control" ng-minlength="3" maxlength="50" placeholder="Enter Your E-mail Adress">
+                                    </div>
+                                    <div class="error,help-block" ng-show="(userform.username.$dirty || submitted) && userform.username.$invalid">
+                                        <span class="text-danger" ng-show="userform.username.$error.required">Enter username</span>
+                                        <span class="text-danger" ng-show="userform.username.$error.minlength">Minimum 3 characters are required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-xs-6">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <div>  
+                                        <div class="input-inner-addon "> <i class="fa fa-unlock-alt brand-col"></i>
+                                            <input type="password" ng-model="user.password" required name="password" class="form-control" ng-minlength="8" maxlength="20" ng-blur="isPassMatch(userform)" id="exampleInputPassword1" placeholder="Password">
+                                        </div>
+                                        <div class="error,help-block" ng-show="(userform.password.$dirty || submitted) && userform.password.$invalid">
+                                            <span class="text-danger" ng-show="userform.password.$error.required">Enter password</span>
+                                            <span class="text-danger" ng-show="userform.password.$error.minlength">Minimum 8 characters are required.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label for="exampleInputPassword1">Confirm Password</label>
+                                    <div>  
+                                        <div class="input-inner-addon "> <i class="fa fa-unlock-alt brand-col"></i>
+                                            <input type="password" ng-model="user.confirmPassword" required name="confirmpassword" class="form-control" ng-minlength="8" maxlength="20" ng-blur="isPassMatch(userform)" id="confirmpassword" placeholder="Password">
+                                        </div>
+                                        <div class="error,help-block" ng-show="(userform.confirmpassword.$dirty || submitted) && userform.confirmpassword.$invalid">
+                                            <span class="text-danger" ng-show="userform.confirmpassword.$error.required">Enter confirm password</span>
+                                            <span class="text-danger" ng-show="userform.confirmpassword.$error.minlength">Minimum 8 characters are required.</span>
+                                            <span class="text-danger" ng-show="userform.confirmpassword.$error.PasswordDidntMatch">Passwords don't match</span>    
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 text-center spacer30">
+                                    <button class="btn btn-signup" ng-click="doRegister(userform)">SIGN UP</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Signup--> 
+
+<!--header section-->
+<div class="container-fluid header">
+    <div class="row"> 
+        <!-- Button trigger modal -->
+
+        <div class="col-xs-12 col-lg-2 col-md-4 text-center"><a class="page-scroll" href="#home"> <img src="images/promodIO-logo.png" alt="Promod.IO"/></a> </div>
+        <div class="col-xs-12 col-lg-6 col-lg-offset-4 col-md-8">
+            <ul id="top-nav" class="pull-left">
+                <li><a class="page-scroll" href="#howitworks">How it Works</a></li>
+                <li><a class="page-scroll" href="#whypromodio">Why Promod.IO</a></li>
+                <li><a class="page-scroll" href="#Contact">Contact us</a></li>
+            </ul>
+            <button class="btn btn-login pull-right"  data-toggle="modal" ng-click="openSignUpModel();">Log in</button>
+        </div>
+    </div>
+</div>
+<!--//header section--> 
+
+<!--banner section-->
+<section id="home">
+    <div class="banner">
+        <div class="container">
+            <div class="col-xs-12 col-lg-7 col-md-6 left-col">
+                <div class="row">
+                    <div class="col-xs-11 col-xs-offset-1">
+                        <h1 class="pline">Listen. promote. </h1>
+                        <p class="biliner">Help make the world a better place by promoting independent music you like</p>
+                        <p class="signup">Signup For <span class="free">FREE</span></p>
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <input type="text" class="form-control input-lg input-signup " placeholder="Your email Address">
+                            </div>
+                            <div class="col-xs-4">
+                                <button class="btn btn-lg  btn-success green">Join</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-lg-5 col-md-6 col-md-offset-0 col-xs-offset-1 right-image"> <img src="images/ipad.png"  alt="Ipad"/> </div>
+        </div>
+    </div>
+</section>
+<!--//banner section--> 
+
+<!--how it works-->
+<section id="howitworks">
+    <div class="howitworks">
+        <div class="container">
+            <div class="col-xs-12 col-lg-6 col-md-6" >
+                <h3 class="whyus"> <span  class="icn" ><img src="images/promote-icn.png" alt="promote-icon"/></span>Participate in promoting a song </h3>
+                <p class="description">Traditionally the only way a song gets promoted is through mainstream media. Promod.io enables everyone to participate in making a song popular. </p>
+                <h3 class="whyus"> <span  class="icn" ><img src="images/share-icn.png" alt="Share-icon"/></span>Power to Independent Musicians </h3>
+                <p class="description">Although there are more independent musicians than ever before, with an exception of a few, popular music are still being driven by big budgets of recording labels. Promod.io enables small indie musicians to promote their songs to a wide audience, even, without a marketing budget. </p>
+                <h3 class="whyus"><span class="icn" ><img src="images/tweet-icn.png" alt="tweet-icon"/></span>The Community</h3>
+                <p class="description">Promodions are passionate about music, and can often be heard having long and deep discussions about song feel, hook, structure, dynamics etc. If you are one of us, this is your home. </p>
+                <h3 class="whyus"><span  class="icn" ><img src="images/music-icn.png" alt="music-icon"/></span>All about the music </h3>
+                <p class="description">A place where you can play fresh music all day, all night, download sounds you like, and promote music that invigorates you, and upload your own music to share with the world. </p>
+            </div>
+            <div class="col-xs-12 col-lg-6 col-md-6 col-sm-6 righttoleft"> <img src="images/macbook.png" alt="macbook" /> </div>
+        </div>
+    </div>
+</section>
+<!--//how it works--> 
+
+<!--whypromodio-->
+<section id="whypromodio">
+    <div class="whypromodio">
+        <div class="container">
+            <div class="col-xs-12 text-center">
+                <h2 class="why-promodio"style="margin-bottom:100px;">WHY <span class="brand-col">PROMODO.IO</span>?</h2>
+            </div>
+            <!--carousel-->
+            <div class="col-xs-12">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"> 
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <div class="col-xs-12 col-lg-8 col-md-9">
+                                <h3 class="whypromodioscr"><span class="icn" ><img src="images/tweet-icn.png" /></span>Supporting independent musicians everywhere </h3>
+                                <p class="scrtxt">Great music are created everyday by musicians everywhere in the world. But only a very small fraction get into mainstream media. We hope to level the playing field for every independent musician out there, so that every music will be popular based on its own merits, and not based on an opinion of a small group of music executives. Give us a hand in making this dream possible. </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="col-xs-12 col-lg-8 col-md-9">
+                                <h3 class="whypromodioscr"><span class="icn" ><img src="images/tweet-icn.png"  /></span>Supporting independent musicians everywhere </h3>
+                                <p class="scrtxt">Great music are created everyday by musicians everywhere in the world. But only a very small fraction get into mainstream media. We hope to level the playing field for every independent musician out there, so that every music will be popular based on its own merits, and not based on an opinion of a small group of music executives. Give us a hand in making this dream possible. </p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="col-xs-12 col-lg-8 col-md-9">
+                                <h3 class="whypromodioscr"><span class="icn" ><img src="images/tweet-icn.png"  /></span>Supporting independent musicians everywhere </h3>
+                                <p class="scrtxt">Great music are created everyday by musicians everywhere in the world. But only a very small fraction get into mainstream media. We hope to level the playing field for every independent musician out there, so that every music will be popular based on its own merits, and not based on an opinion of a small group of music executives. Give us a hand in making this dream possible. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--//carousel--> 
+        </div>
+    </div>
+</section>
+<!--//whypromodio--> 
+
+<!--listen-promote-->
+<section id="Contact">
+    <div class="listen-promote">
+        <div class="container">
+            <div class="col-lg-10 col-xs-12 col-lg-offset-1 col-md-10 col-md-offset-1 text-center">
+                <h2 class="why-promodio bottom-spacer-40">Listen. Promote.</h2>
+                <h5 class="bottom-spacer-40">Be a Promodion today and start listening to fresh music immediately </h5>
+                <div class="row">
+                    <div class="col-xs-8 col-lg-9">
+                        <div class="left-inner-addon-lg "> <i class="fa fa-envelope-o fa-2x text-muted"></i>
+                            <input type="text" class="form-control input-lg " id="exampleInputAmount" placeholder="Enter Your E-mail Adress">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-lg-3">
+                        <button class="btn btn-block btn-success btn-lg join">JOIN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--//listen-promote-->
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-5 col-md-3 col-sm-12"> <img src="images/footer-logo.png" /> </div>
+            <div class="col-xs-12 col-lg-5 col-md-6 col-sm-12">
+                <ul id="bottom-nav">
+                    <li><a class="page-scroll" href="#howitworks">How it Works</a></li>
+                    <li><a class="page-scroll" href="#whypromodio">Why Promod.IO</a></li>
+                    <li><a class="page-scroll" href="#Contact">Contact us</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-lg-2 col-md-3 col-sm-12">
+                <ul id="bottom-nav">
+                    <li><i class="fb-t-g fa fa-twitter text-info"></i></li>
+                    <li><i class="fb-t-g fa fa-facebook text-primary"></i></li>
+                    <li><i class="fb-t-g fa fa-google-plus text-danger  "></i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="scripts/theme/promodio.js"></script> 
+<script src="scripts/theme/jquery.easing.min.js"></script>  

@@ -1,0 +1,27 @@
+<!--section tracks-->
+<div class="col-xs-10 col-xs-offset-1 text-center" ng-if='!promotersTrackView && promoters.length > 0' ng-cloak>
+
+    <ul id="user-profile">
+        <li ng-repeat="promoter in promoters"  ng-click='loadPromoterTracks(promoter)' class='pointer'>
+            <img ng-if="promoter.imageURL !== ''" src="{{promoter.imageURL}}" class="img-responsive-icon img-circle"/>
+            <img ng-if="promoter.imageURL === ''" src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle"/>
+            <img src="images/tickmark.png" class="tickmark"/>
+        </li>
+    </ul>
+</div>
+
+<div ng-if="promoters.length === 0" ng-cloak>
+    <br/><br/>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            Promoters do not exist
+        </div>
+    </div>
+</div>
+<div ng-show='promotersTrackView'>
+    <div ng-include src="'views/promoterstrack.html'"></div>
+</div>
+<!--section tracks--> 
+
+<div class="clearfix"></div>
+

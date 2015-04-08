@@ -1,0 +1,32 @@
+<!--header section-->
+<div class="container-fluid header-inner">
+    <div class="row">
+        <div class="col-xs-4 col-lg-2 col-sm-3 col-md-2 brand-logo pointer" ng-click="navigateToPage('/home');"><img src="images/promodIO-logo-inner.png" class="img-responsive" alt="Promod.IO"/> </div>
+        <div class="col-xs-8 col-sm-6 col-lg-8 col-md-7 change-bg">
+            <ul id="top-nav-inner">
+                <li><span>
+                        <button class="btn btn-listen" ng-click="navigateToPage('/listennow');">Listen now</button>
+                    </span></li>
+                <!--                <li><span>Favorites</span></li>
+                                <li><span>Search</span></li>-->
+            </ul>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-lg-2 col-md-3  no-padding text-right">
+            <ul id="top-right-nav">
+                <li class="credits col-xs-2 col-sm-4 col-lg-4 col-md-4 text-center"><span class="brand-col credits-txt" >Credits</span>{{session.credit_value > 0 && session.credit_value|| '0'}}
+                    <!-- <i class="fa fa-plus-circle"></i>--> 
+                </li>
+                <li class="col-xs-8  col-sm-4 col-lg-4 col-md-4 user downarrow dropdown text-center"  data-toggle="dropdown"><span class="avtaar-img img-circle"> <img ng-src="{{profileImageUrl !== undefined && profileImageUrl|| DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon"/></span></li>
+                <ul class="dropdown-menu" id="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li class="pointer"><a href="#/settings"><i class="fa fa-cog"></i>Settings</a></li>
+                    <li class="pointer"><a ng-click="navigateToPage('/promod', 1);"><i class="fa fa-user"></i>My Profile</a></li>
+                    <li class="pointer"><a ng-click="navigateToPage('/promod', 2)"><i class="fa fa-arrow-circle-o-up"></i>My Promoters</a></li>
+                    <li class="pointer" ng-click="logout();"><a href=""><i class="fa fa-sign-out"></i>Logout</a></li>
+                </ul>
+                <li class="upload col-xs-2 col-sm-4 col-lg-4 col-md-4 text-center pointer" ng-click="navigateToPage('/addsong')"><i class="fa fa-plus-square-o square-icn"></i>Upload</li>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<!--//header section-->

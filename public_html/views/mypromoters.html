@@ -1,0 +1,67 @@
+
+<div class="wrapper">
+
+    <div ng-show="!promotersTrackView" class="banner-inner01 text-center" style="background:url({{coverImageUrl !== undefined && coverImageUrl|| 'images/inner-banner.jpg'}}); background-size: 100% 100%; background-repeat: no-repeat;">
+
+        <div align="center" class="col-xs-12">
+            <ul id="user-profile02" style="margin: 0px;">
+                <li>
+                    <img ng-src="{{profileImageUrl !== undefined && profileImageUrl|| DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle"/>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12  ">
+            <span class="text-promoter song-name">{{session.first_name + " " + session.last_name}}</span>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div ng-show="promotersTrackView" class="banner-inner01 text-center" style="background:url({{userCoverImageUrl !== undefined && userCoverImageUrl|| 'images/inner-banner.jpg'}}); background-size: 100% 100%; background-repeat: no-repeat;">
+
+        <div align="center" class="col-xs-12">
+            <ul id="user-profile02" style="margin: 0px;">
+                <li>
+                    <img ng-src="{{userProfileImageUrl !== undefined && userProfileImageUrl|| DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon  img-circle"/>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12  ">
+            <span class="text-promoter song-name">{{promoterDetails.first_name + " " + promoterDetails.last_name}}</span>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-xs-12 text-center"> <span class="tracks-fb-circle"><i class="fa fa-facebook "></i></span>&nbsp;<span class="tracks-twitter-circle"><i class="fa fa-twitter "></i></span>&nbsp;<span class="tracks-youtube-circle"><i class="fa fa-youtube"></i></span><br>
+            <br>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!--        <img ng-show="!promotersTrackView" class='banner-image' ng-src="{{coverImageUrl !== undefined && coverImageUrl|| 'images/inner-banner.jpg'}}" class="img-responsive" style="width:100%;"/>
+            <img ng-show="promotersTrackView" class='banner-image' ng-src="{{userCoverImageUrl !== undefined && userCoverImageUrl|| 'images/inner-banner.jpg'}}" class="img-responsive" style="width:100%;"/>        -->
+
+    <div class="clearfix"></div>
+    <div class="track-promoters">
+        <div class="col-xs-12 text-center">
+            <ul class="track-promoters-tab" style="display: inline-block;">
+                <li class="pointer" ng-click="$parent.section = 1" ng-class="{'promoters-tab' : $parent.section === 1, 'tracks-tab' : $parent.section === 2}"><span ng-click="promotersTrackView = false;
+                            currentTracks = 8;">TRACKS <span class="badge bg-promo"><span ng-bind="tracksIds.length > 0 && tracksIds.length || 0"></span></span></span></li>
+                <li class="pointer" ng-click="$parent.section = 2" ng-class="{'promoters-tab' : $parent.section === 2, 'tracks-tab' : $parent.section === 1}"><span ng-click="promotersTrackView = false;
+                            currentTracks = 8;
+                            otherUsersTracksAvailableToLoad = false;">PROMOTERS <span class="badge bg-promo"><span ng-bind="promoters.length > 0 && promoters.length || 0"></span></span></span></li>
+            </ul>
+            <button class="btn btn-success" style="position:absolute; right:10px; top:8px;"> FOLLOW</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div ng-show='$parent.section === 1'>
+        <div ng-include src="'views/tracks.html'"></div>
+    </div>
+
+    <div ng-show='$parent.section === 2'>
+        <div ng-include src="'views/promoters.html'"></div>
+    </div>
+
+    <div ng-include src="'views/common/innerfooter.html'"></div>
+
+</div>
+<div class="clearfix"></div>

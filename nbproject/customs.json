@@ -1,0 +1,14 @@
+{
+    "attributes": {
+        "footer": {
+            "context": "div"
+        },
+        "header": {
+            "context": "div"
+        },
+        "file-model": {
+            "context": "input"
+        }
+    },
+    "elements": {}
+}
