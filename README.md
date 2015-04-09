@@ -1,6 +1,13 @@
 # promodio_ui
 Promodio UI
 
+###### Login ######
+click on "LOG IN" 
+
+###### Sign Up ######
+click on "Signup For FREE"
+
+
 For actual deployment you need to do the following changes.
 
 * $rootScope.apipath & serverURL must be set to the URL of the api server
