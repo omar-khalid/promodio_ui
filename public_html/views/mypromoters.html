@@ -1,5 +1,5 @@
 
-<div class="wrapper" ng-if='isLoggedIn === true' ng-cloak>
+<div class="wrapper" ng-show='isLoggedIn === true' ng-cloak>
 
     <div ng-show="!promotersTrackView" class="banner-inner01 text-center" style="background:url({{coverImageUrl !== undefined && coverImageUrl|| 'images/inner-banner.jpg'}}); background-size: 100% 100%; background-repeat: no-repeat;">
 
@@ -48,7 +48,7 @@
                             currentTracks = 8;
                             otherUsersTracksAvailableToLoad = false;">PROMOTERS <span class="badge bg-promo"><span ng-bind="promoters.length > 0 && promoters.length || 0"></span></span></span></li>
             </ul>
-            <button class="btn btn-success" style="position:absolute; right:10px; top:8px;"> FOLLOW</button>
+            <button title="In progress" class="btn btn-success" style="position:absolute; right:10px; top:8px;" disabled>FOLLOW</button>
         </div>
         <div class="clearfix"></div>
     </div>

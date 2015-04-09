@@ -50,7 +50,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
         $rootScope.responseURL = "http://68.169.56.112/test/show";
 
         $rootScope.$on('$routeChangeStart', function(event, current, previous) {
-          
+
             $rootScope.validations = [];
             $rootScope.url = $location.path();
 

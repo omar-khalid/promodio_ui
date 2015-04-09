@@ -1,7 +1,7 @@
 'use strict';
 /* Controller Module */
 
-promodControllers.controller('MainController', ['$scope', '$rootScope', '$http', '$animate', '$location', 'UserService', function($scope, $rootScope, $http, $animate, $location, UserService) {
+promodControllers.controller('MainController', ['$scope', '$rootScope', '$http', '$animate', '$location', 'UserService' ,'$timeout', function($scope, $rootScope, $http, $animate, $location, UserService, $timeout) {
 
         $scope.$on('$viewContentLoaded', function() {
         });
@@ -80,8 +80,13 @@ promodControllers.controller('MainController', ['$scope', '$rootScope', '$http',
                     $scope.user.password = "";
                     $scope.user.confirmPassword = "";
 
+                    $('#signupModal').modal('hide');
+                    $('#loginModal').modal('hide');
+
                     $rootScope.$apply(function() {
-                        $rootScope.login();
+                        $timeout(function() {
+                            $rootScope.login();
+                        }, 500);
                     });
 
                 } else {
@@ -94,7 +99,7 @@ promodControllers.controller('MainController', ['$scope', '$rootScope', '$http',
             }
 
             function loginFailed(evt) {
-                alert("failed");
+                alert("Login failed. Try again...");
             }
         };
 

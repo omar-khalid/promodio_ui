@@ -1392,6 +1392,13 @@ a.promodlink :hover {
         right: 0px;
 
     }
+    #top-nav {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        margin-left: 0px;
+        line-height: 45px;
+    }
     .change-bg {
         background: #293a4d
     }
@@ -1542,12 +1549,12 @@ a.promodlink :hover {
         border-right: 1px solid #a8bec9;
         padding: 0px 9px;
     }
-/*    .track-promoters {
-        display: none;
-    }*/
-    .btn-login {
-        display: none;
-    }
+    /*    .track-promoters {
+            display: none;
+        }
+        .btn-login {
+            display: none;
+        }*/
     footer {
         text-align: center!important;
     }
@@ -1601,7 +1608,7 @@ a.promodlink :hover {
     .more-only{
         display: none;
     }
-
+    .pause-play-btn{ margin-right:7px!important;}
 }
 
 @media (min-width: 769px) and (max-width:992px) {
