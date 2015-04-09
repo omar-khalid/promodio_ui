@@ -23,6 +23,7 @@ promodControllers.controller('MainController', ['$scope', '$rootScope', '$http',
         };
 
         $scope.openSignUpModel = function() {
+            $rootScope.register = false;
             $scope.submitted = false;
             $scope.user = {};
             $scope.user.username = "";
@@ -39,6 +40,64 @@ promodControllers.controller('MainController', ['$scope', '$rootScope', '$http',
             }
         };
 
+        $scope.openLoginModel = function() {
+            $scope.submitted = false;
+            $scope.user = {};
+            $scope.user.username = "";
+            $scope.user.password = "";
+            $scope.loginform.$setPristine();
+            $('#loginModal').modal('show');
+        };
+
+        $scope.doLogin = function(loginform) {
+
+            $scope.submitted = true;
+            if (loginform.$valid) {
+                $scope.loginProcess();
+            }
+        };
+
+        $scope.loginProcess = function() {
+
+            var loginURL = $rootScope.apipath + "/login_handler";
+
+            var fd = new FormData();
+            fd.append('login', $scope.user.username);
+            fd.append('password', $scope.user.password);
+
+            var xhr = new XMLHttpRequest();
+            xhr.addEventListener("load", loginComplete, false);
+            xhr.addEventListener("error", loginFailed, false);
+            xhr.open("POST", loginURL);
+            xhr.send(fd);
+
+            function loginComplete(evt) {
+
+                if (evt.currentTarget.responseURL.toString() === $rootScope.responseURL) {
+
+                    $scope.user = {};
+                    $scope.user.username = "";
+                    $scope.user.password = "";
+                    $scope.user.confirmPassword = "";
+
+                    $rootScope.$apply(function() {
+                        $rootScope.login();
+                    });
+
+                } else {
+                    $rootScope.$apply(function() {
+                        var msg = "Invalid username or password";
+                        var type = $rootScope.failure;
+                        $rootScope.addMessage(msg, type);
+                    });
+                }
+            }
+
+            function loginFailed(evt) {
+                alert("failed");
+            }
+        };
+
         $scope.registerUser = function() {
 
             var success = function(data) {
@@ -46,18 +105,11 @@ promodControllers.controller('MainController', ['$scope', '$rootScope', '$http',
                 if (data.user !== undefined) {
 
                     $scope.submitted = false;
-                    $scope.user = {};
-                    $scope.user.username = "";
-                    $scope.user.password = "";
-                    $scope.user.confirmPassword = "";
                     $scope.userform.$setPristine();
+                    $rootScope.register = true;
+                    $scope.loginProcess();
 
-                    var msg = $rootScope.REGISTER_USER_SUCCESS;
-                    var type = $rootScope.success;
-                    $rootScope.addMessage(msg, type);
 
-                    $location.path('/registration');
-                    
                 } else {
                     var msg = $rootScope.REGISTER_USER_FAILURE;
                     var type = $rootScope.failure;

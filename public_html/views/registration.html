@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" ng-if='isLoggedIn === true' ng-cloak>
     <div class="col-xs-8 col-xs-offset-2 text-center registration">
         <br>
         <h3>Registration</h3>
@@ -11,7 +11,7 @@
         <h3>Registration completed</h3>
         <div class="border-box ">
             Great!! Welcome to Promod.io<br>
-            You can <a href="#" class="promodlink">start listening</a> to fresh music immediately
+            You can <a href="" ng-click="navigateToPage('/listennow');" class="promodlink">start listening</a> to fresh music immediately
 
 
         </div>
