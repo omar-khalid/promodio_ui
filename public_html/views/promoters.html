@@ -3,8 +3,8 @@
 
     <ul id="user-profile">
         <li ng-repeat="promoter in promoters"  ng-click='loadPromoterTracks(promoter)' class='pointer'>
-            <img ng-if="promoter.imageURL !== ''" src="{{promoter.imageURL}}" class="img-responsive-icon img-circle"/>
-            <img ng-if="promoter.imageURL === ''" src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle"/>
+            <img ng-if="promoter.imageURL !== ''" ng-src="{{promoter.imageURL}}" class="img-responsive-icon img-circle"/>
+            <img ng-if="promoter.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle"/>
             <img src="images/tickmark.png" class="tickmark"/>
         </li>
     </ul>

@@ -57,7 +57,7 @@
                             <ul id="promotedby">
                                 <li class="user-img img-circle" ng-repeat="promoter in track.promoters track by $index"  ng-if="$index < 4">
                                     <img ng-if="promoter.imageURL !== ''" class="img-responsive-icon" ng-src="{{promoter.imageURL}}"/>
-                                    <img class="img-responsive-icon" ng-if="promoter.imageURL === ''" src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
+                                    <img class="img-responsive-icon" ng-if="promoter.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
                                 </li>
                                 <li class="img-circle text-center user-more pointer" ng-if="track.promoters.length > 4" ng-click="showAllPromoters(track.promoters);">
                                     +{{track.promoters.length - 4}}

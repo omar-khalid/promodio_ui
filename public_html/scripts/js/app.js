@@ -233,7 +233,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
         };
 
         $rootScope.isCurrentUserId = function(id) {
-            if ($rootScope.session.id !== undefined && $rootScope.session.id !== '' && id !== undefined && id !== '' && $rootScope.session.id === id) {
+            if ($rootScope.session !== undefined && $rootScope.session.id !== undefined && $rootScope.session.id !== '' && id !== undefined && id !== '' && $rootScope.session.id === id) {
                 return true;
             }
             return false;

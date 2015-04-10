@@ -46,7 +46,7 @@
                         <li >PROMOTED</li>
                         <li class="player-user-img img-circle" ng-repeat="promoter in $parent.currentPlayingTrack.track.promoters track by $index" ng-if="$parent.currentPlayingTrack.track.promoters.length > 0 && $index < 2">
                             <img class="img-circle img-responsive-icon" ng-if="promoter.imageURL !== ''"  ng-src="{{promoter.imageURL}}"/>
-                            <img class="img-circle img-responsive-icon" ng-if="promoter.imageURL === ''" src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" />
+                            <img class="img-circle img-responsive-icon" ng-if="promoter.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" />
                         </li>
                         <li class="img-circle plusmorecircle pointer" ng-if="$parent.currentPlayingTrack.track.promoters.length > 2" ng-click="showAllPromoters($parent.currentPlayingTrack.track.promoters);"><div class="text-center">+{{$parent.currentPlayingTrack.track.promoters.length - 2}}</div></li>
                         <li class="img-circle plusmorecircle" ng-if="$parent.currentPlayingTrack.track.promoters === undefined || $parent.currentPlayingTrack.track.promoters.length === 0"><div class="text-center">0</div></li>
@@ -62,7 +62,7 @@
                         <li >PROMOTED</li>
                         <li class="player-user-img img-circle" ng-repeat="promoter in $parent.currentPlayingTrack.track.promoters track by $index" ng-if="$parent.currentPlayingTrack.track.promoters.length > 0 && $index < 1">
                             <img class="img-circle img-responsive-icon" ng-if="promoter.imageURL !== ''"  ng-src="{{promoter.imageURL}}"/>
-                            <img class="img-circle img-responsive-icon" ng-if="promoter.imageURL === ''" src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" />
+                            <img class="img-circle img-responsive-icon" ng-if="promoter.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" />
                         </li>
                         <li class="img-circle plusmorecircle pointer" ng-if="$parent.currentPlayingTrack.track.promoters.length > 1" ng-click="showAllPromoters($parent.currentPlayingTrack.track.promoters);"><div class="text-center">+{{$parent.currentPlayingTrack.track.promoters.length - 1}}</div></li>
                         <li class="img-circle plusmorecircle" ng-if="$parent.currentPlayingTrack.track.promoters === undefined || $parent.currentPlayingTrack.track.promoters.length === 0"><div class="text-center">0</div></li>
@@ -194,8 +194,8 @@
 
                         <ul id="user-profile">
                             <li ng-repeat="promoter in $parent.promoterList" class='pointer'>
-                                <img ng-if="promoter.imageURL !== ''" src="{{promoter.imageURL}}" class="img-responsive-icon img-circle"/>
-                                <img ng-if="promoter.imageURL === ''" src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle"/>
+                                <img ng-if="promoter.imageURL !== ''" ng-src="{{promoter.imageURL}}" class="img-responsive-icon img-circle"/>
+                                <img ng-if="promoter.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle"/>
                                 <img src="images/tickmark.png" class="tickmark"/>
                             </li>
                         </ul>
