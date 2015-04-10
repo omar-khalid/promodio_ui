@@ -1366,6 +1366,11 @@ a.promodlink :hover {
     display: block;
 }
 
+.btn-listen:focus,.btn-listen:active {
+    background: #f48282;
+    color:#fff;
+}
+
 /*media-query*/
 @media (max-width: 480px){
     .header-inner {
@@ -1493,7 +1498,7 @@ a.promodlink :hover {
 
 }
 
-@media (min-width: 481px) and (max-width:768px) {
+@media (min-width: 481px) and (max-width:767px) {
     .header-inner {
         background-color: #344960;
         position: fixed;
@@ -1611,7 +1616,7 @@ a.promodlink :hover {
     .pause-play-btn{ margin-right:7px!important;}
 }
 
-@media (min-width: 769px) and (max-width:992px) {
+@media (min-width: 768px) and (max-width:992px) {
     .fix-promotion {
         position: absolute;
         right: 0px;
