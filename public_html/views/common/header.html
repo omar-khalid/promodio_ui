@@ -16,7 +16,7 @@
                 <li class="credits col-xs-2 col-sm-4 col-lg-4 col-md-4 text-center"><span class="brand-col credits-txt" >Credits</span>{{session.credit_value > 0 && session.credit_value|| '0'}}
                     <!-- <i class="fa fa-plus-circle"></i>--> 
                 </li>
-                <li class="col-xs-8  col-sm-4 col-lg-4 col-md-4 user downarrow dropdown text-center"  data-toggle="dropdown"><span class="avtaar-img img-circle"> <img ng-src="{{profileImageUrl !== undefined && profileImageUrl|| DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon"/></span></li>
+                <li class="col-xs-8  col-sm-4 col-lg-4 col-md-4 user downarrow dropdown text-center"  data-toggle="dropdown"><span class="avtaar-img img-circle" ng-if="profileImageFound" ng-cloak> <img ng-src="{{profileImageUrl !== undefined && profileImageUrl|| DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon"/></span></li>
                 <ul class="dropdown-menu" id="dropdown-menu" role="menu" aria-labelledby="dLabel">
                     <li class="pointer"><a href="#/settings"><i class="fa fa-cog"></i>Settings</a></li>
                     <li class="pointer"><a ng-click="navigateToPage('/promod', 1);"><i class="fa fa-user"></i>My Profile</a></li>

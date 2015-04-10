@@ -1,9 +1,10 @@
 'use strict';
 /* Controller Module */
 
-promodControllers.controller('MainController', ['$scope', '$rootScope', '$http', '$animate', '$location', 'UserService' ,'$timeout', function($scope, $rootScope, $http, $animate, $location, UserService, $timeout) {
+promodControllers.controller('MainController', ['$scope', '$rootScope', '$http', '$animate', '$location', 'UserService', '$timeout', function($scope, $rootScope, $http, $animate, $location, UserService, $timeout) {
 
         $scope.$on('$viewContentLoaded', function() {
+            $rootScope.validations = [];
         });
 
         $scope.user = {};
