@@ -616,6 +616,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
         
         $scope.playNow = function(track) {
             
+            $rootScope.shouldPlayNextTrack = false;
             $rootScope.listeningSongCreditDetails={};
             $rootScope.promoteTrack = track;  
             $rootScope.promoteResult = false;

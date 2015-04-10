@@ -6,7 +6,7 @@ var promod = angular.module('promod', [
     'promod.controllers', 'promod.directives', 'mediaPlayer', 'ngSlider', 'lazyScroller']);
 
 promod.config(['$routeProvider',
-    function($routeProvider) {
+    function ($routeProvider) {
         $routeProvider.
                 when('/', {
                     templateUrl: 'views/main.html',
@@ -40,7 +40,7 @@ promod.config(['$routeProvider',
                 });
     }]);
 
-promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($rootScope, $timeout, $location, CommonOperation) {
+promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function ($rootScope, $timeout, $location, CommonOperation) {
 
         $rootScope.apipath = "http://68.169.56.112";
         $rootScope.session = {};
@@ -49,14 +49,14 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
         $rootScope.register = false;
         $rootScope.responseURL = "http://68.169.56.112/test/show";
 
-        $rootScope.$on('$routeChangeStart', function(event, current, previous) {
+        $rootScope.$on('$routeChangeStart', function (event, current, previous) {
 
             $rootScope.validations = [];
             $rootScope.url = $location.path();
 
         });
 
-        $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
             $rootScope.scrollFunc('top');
         });
 
@@ -68,7 +68,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
         $rootScope.warningTimeout = 20000;
         $rootScope.validations = [];
 
-        $rootScope.addMessage = function(msg, type, multiple) {
+        $rootScope.addMessage = function (msg, type, multiple) {
             if (multiple === undefined) {
                 $rootScope.validations = [];
             }
@@ -87,23 +87,23 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
                 $rootScope.timeout = $rootScope.warningTimeout;
             }
             if ($rootScope.timeout) {
-                $timeout(function() {
+                $timeout(function () {
                     $rootScope.closeAlertMessage($rootScope.validations.indexOf(message));
                 }, $rootScope.timeout);
             }
         };
 
-        $rootScope.closeAlertMessage = function(index) {
+        $rootScope.closeAlertMessage = function (index) {
             $rootScope.validations.splice(index, 1);
         };
 
-        $rootScope.clearAlertMessages = function() {
+        $rootScope.clearAlertMessages = function () {
             $rootScope.validations = [];
         };
 
         $rootScope.profileImageUrl = '';
 
-        $rootScope.getProfileImage = function() {
+        $rootScope.getProfileImage = function () {
 
             function success(data) {
                 if (data !== undefined && data.user_images !== undefined && data.user_images.length > 0) {
@@ -122,7 +122,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
 
         $rootScope.coverImageUrl = '';
 
-        $rootScope.getCoverImage = function() {
+        $rootScope.getCoverImage = function () {
 
             function success(data) {
                 if (data !== undefined && data.user_images !== undefined && data.user_images.length > 0) {
@@ -145,7 +145,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
 
         $rootScope.iconImageUrl = '';
 
-        $rootScope.getIconImage = function() {
+        $rootScope.getIconImage = function () {
 
             function success(data) {
                 if (data !== undefined && data.user_images !== undefined && data.user_images.length > 0) {
@@ -170,7 +170,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
         $rootScope.getCoverImage();
         $rootScope.getIconImage();
 
-        $rootScope.pingServer = function() {
+        $rootScope.pingServer = function () {
 
             function success(data) {
                 $rootScope.session = data.user;
@@ -197,7 +197,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
         $rootScope.newCreditValue = 0;
         $rootScope.currentSongEarnings = 0;
 
-        $rootScope.updateCredits = function() {
+        $rootScope.updateCredits = function () {
 
             $rootScope.lastCreditValue = $rootScope.session.credit_value;
             function success(data) {
@@ -208,7 +208,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
                         $rootScope.currentSongEarnings = 0;
                     $rootScope.showAlertMessage($rootScope.MESSAGES.SONG_LISTENING_CREDIT_PAYMENT_SUCCESS);
                     var msg = $rootScope.MESSAGES.SONG_LISTENING_CREDIT_PAYMENT_SUCCESS;
-                    var type = $rootScope.failure;
+                    var type = $rootScope.success;
                     $rootScope.addMessage(msg, type);
                 } else {
                     $rootScope.showAlertMessage($rootScope.MESSAGES.UPDATE_CREDIT_FAILURE);
@@ -225,14 +225,14 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
             CommonOperation.getUser(success, failure);
         };
 
-        $rootScope.arrayContains = function(searchString, array) {
+        $rootScope.arrayContains = function (searchString, array) {
             if (searchString !== undefined && array !== undefined && array.length > 0) {
                 return array.indexOf(searchString) > -1;
             }
             return false;
         };
 
-        $rootScope.isCurrentUserId = function(id) {
+        $rootScope.isCurrentUserId = function (id) {
             if ($rootScope.session !== undefined && $rootScope.session.id !== undefined && $rootScope.session.id !== '' && id !== undefined && id !== '' && $rootScope.session.id === id) {
                 return true;
             }
@@ -241,7 +241,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
 
         $rootScope.pingServer();
         $rootScope.section = 1;
-        $rootScope.navigateToPage = function(page, section) {
+        $rootScope.navigateToPage = function (page, section) {
             if (section === 1) {
                 $rootScope.section = 1;
             } else if (section === 2) {
@@ -250,7 +250,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
             $location.path(page);
         };
 
-        $rootScope.scrollFunc = function(scrollToId) {
+        $rootScope.scrollFunc = function (scrollToId) {
             var est = document.getElementById(scrollToId);
             var docPos = f_scrollTop();
             est.scrollIntoView();
@@ -274,26 +274,26 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
 
         $rootScope.isDirectPromotion = false;
         $rootScope.backup = {};
-        $rootScope.backupPromoteTrack = function(promoteTrack, promoterInfo) {
+        $rootScope.backupPromoteTrack = function (promoteTrack, promoterInfo) {
             if (promoteTrack !== null)
                 $rootScope.backup.promoteTrack = promoteTrack;
             if (promoterInfo !== null)
                 $rootScope.backup.promoterInfo = promoterInfo;
         };
 
-        $rootScope.backupPlayerPromoteTrack = function() {
+        $rootScope.backupPlayerPromoteTrack = function () {
             if ($rootScope.isDirectPromotion === false) {
                 $rootScope.backup.promoteTrack = $rootScope.promoteTrack;
                 $rootScope.backup.promoterInfo = $rootScope.promoterInfo;
             }
         };
 
-        $rootScope.loadPromoteTrackFromBackup = function() {
+        $rootScope.loadPromoteTrackFromBackup = function () {
             $rootScope.promoteTrack = $rootScope.backup.promoteTrack;
             $rootScope.promoterInfo = $rootScope.backup.promoterInfo;
         };
 
-        $rootScope.promotePlayingTrack = function() {
+        $rootScope.promotePlayingTrack = function () {
             if ($rootScope.isDirectPromotion === true) {
                 $rootScope.isDirectPromotion === false;
                 $rootScope.loadPromoteTrackFromBackup();
@@ -301,7 +301,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
             $rootScope.openPromoteTrackModal();
         };
 
-        $rootScope.openPromoteTrackModal = function() {
+        $rootScope.openPromoteTrackModal = function () {
             if ($rootScope.promotionStatus === 1) {
                 alert("Try later!\nLast promotion request is not yet completed");
                 return;
@@ -310,7 +310,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
             $('#promoteTrackModal').modal('show');
         };
 
-        $rootScope.openDemoteTrackModal = function() {
+        $rootScope.openDemoteTrackModal = function () {
             if ($rootScope.demotionStatus === 1) {
                 alert("Try later!\nLast demotion request is not yet completed");
                 return;
@@ -318,7 +318,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
             $('#demoteTrackModal').modal('show');
         };
 
-        $rootScope.openBuyCreditsModal = function() {
+        $rootScope.openBuyCreditsModal = function () {
             $('#buyCreditsModal').modal('show');
         };
 
@@ -326,11 +326,11 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
         $rootScope.promoteResult = false;
         $rootScope.promotionStatus = 0;//0 - initial, 1- progress, 2 - complete
 
-        $rootScope.promoteAudio = function() {
+        $rootScope.promoteAudio = function () {
             $rootScope.promotionStatus = 1;
             var promoter = {};
 
-            var success = function(data) {
+            var success = function (data) {
                 if (data.result.status === 'OK') {
                     $rootScope.promoteResult = true;
                     //code to update credit value
@@ -372,12 +372,12 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
                 }
             };
 
-            var failure = function() {
+            var failure = function () {
                 $rootScope.promoteResult = 'fail';
                 $rootScope.promotionStatus = 2;
             };
 
-            var updateTracks = function(promotedTrack) {
+            var updateTracks = function (promotedTrack) {
                 //if current user track then simply update its isMyPromotion
                 if ($rootScope.isCurrentUserId(promotedTrack.ownerId)) {
                     for (var index = 0; index < $rootScope.tracks.length; index++) {
@@ -411,16 +411,16 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
         $rootScope.demoteResult = false;
         $rootScope.demotionStatus = 0;//0 - initial, 1- progress, 2 - complete
 
-        $rootScope.demoteAudio = function() {
+        $rootScope.demoteAudio = function () {
             $rootScope.demotionStatus = 1;
             var totalScuccess = 0;
             var totalPromotionsFound = 0;
             var myPromotionIds = [];
 
-            var initiateDemotion = function(promotionID) {
+            var initiateDemotion = function (promotionID) {
                 CommonOperation.demoteAudio({'id': promotionID}, {}, success, failure);
             };
-            var success = function(data) {
+            var success = function (data) {
                 if (data.result.status === 'OK') {
                     totalScuccess++;
                     if (totalPromotionsFound === totalScuccess) {
@@ -433,16 +433,16 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
                     //alert("Failed to demote");
                 }
             };
-            var failure = function() {
+            var failure = function () {
                 $rootScope.demoteResult = 'fail';
                 $rootScope.demotionStatus = 2;
                 //alert("Failed to demote");
             };
-            var removeMyPromotionsFromView = function(promoters) {
+            var removeMyPromotionsFromView = function (promoters) {
                 if (promoters === undefined || promoters.length <= 0 || $rootScope.session.id === undefined || $rootScope.session.id === '')
                     return;
                 var newPromotersList = [];
-                angular.forEach(promoters, function(promoter) {
+                angular.forEach(promoters, function (promoter) {
                     if (!$rootScope.isCurrentUserId(promoter.id)) {
                         newPromotersList.push(promoter);
                     }
@@ -477,7 +477,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
                 $rootScope.requestingPage = '';
                 $rootScope.demotionStatus = 2;
             };
-            var updateTracks = function(demotedTrack) {
+            var updateTracks = function (demotedTrack) {
                 for (var index = 0; index < $rootScope.tracksIds.length; index++) {
                     var trackId = $rootScope.tracksIds[index];
                     if (trackId === demotedTrack.id) {
@@ -502,20 +502,20 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
 
             };
 
-            var requstToInitiateDemotion = function() {
+            var requstToInitiateDemotion = function () {
                 totalPromotionsFound = 0;
                 if (myPromotionIds !== undefined && myPromotionIds.length > 0) {
                     totalPromotionsFound = myPromotionIds.length;
-                    angular.forEach(myPromotionIds, function(promotionId) {
+                    angular.forEach(myPromotionIds, function (promotionId) {
                         initiateDemotion(promotionId);
                     });
                 }
             };
-            var successGetPromotion = function(data) {
+            var successGetPromotion = function (data) {
                 if (data.promotions !== undefined) {
 
                     if (data.promotions.length > 0) {
-                        angular.forEach(data.promotions, function(promotion) {
+                        angular.forEach(data.promotions, function (promotion) {
                             if ($rootScope.isCurrentUserId(promotion.promoter_id)) {
                                 myPromotionIds.push(promotion.id);
                             }
@@ -524,7 +524,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
                 }
                 requstToInitiateDemotion();
             };
-            var failureGetPromotion = function() {
+            var failureGetPromotion = function () {
                 $rootScope.demomoteResult = 'fail';
                 $rootScope.demotionStatus = 2;
             };
@@ -533,12 +533,12 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
         };
 
         $rootScope.alertMsg = {};
-        $rootScope.showAlertMessage = function(msg) {
+        $rootScope.showAlertMessage = function (msg) {
             $rootScope.alertMsg.message = msg;
             $('#alertMessageModal').modal('show');
         };
 
-        $rootScope.backToProfile = function() {
+        $rootScope.backToProfile = function () {
             $('#promoteTrackModal').modal('hide');
             $('#demoteTrackModal').modal('hide');
 //            $location.path('/home');
@@ -561,7 +561,8 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
             UPDATE_CREDIT_FAILURE: 'Oops ! Unable to update you credits',
             NO_SONG_FOUND_TO_PLAY: 'No song selected to play',
             WAIT_PROCESSING_LAST_REQUEST: 'Please wait !\nProcessing your last request',
-            CURRENT_SONG_DEMOTION_MSG: 'This song is currently playing, on demoting song will be removed from player.'
+            CURRENT_SONG_DEMOTION_MSG: 'This song is currently playing, on demoting song will be removed from player.',
+            NO_LISTEN_NOW_MSG: 'There is no song available'
         };
         $rootScope.REGISTER_USER_SUCCESS = "User registered successfully";
         $rootScope.REGISTER_USER_FAILURE = "User could not be registered";
@@ -572,14 +573,18 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
 
         $rootScope.promoterList = [];
 
-        $rootScope.showAllPromoters = function(promoters) {
+        $rootScope.showAllPromoters = function (promoters) {
             $rootScope.promoterList = promoters;
             $('#promotersModal').modal('show');
         };
 
-        $rootScope.login = function() {
+        $rootScope.login = function () {
 
             $rootScope.pingServer();
+            $rootScope.getProfileImage();
+            $rootScope.getCoverImage();
+            $rootScope.getIconImage();
+
             $rootScope.isLoggedIn = true;
 
             if ($rootScope.register) {
@@ -591,7 +596,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
 
         };
 
-        $rootScope.logout = function() {
+        $rootScope.logout = function () {
 
             var logoutURL = $rootScope.apipath + "/logout_handler";
 
@@ -601,7 +606,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
             xhr.send();
 
             function logoutComplete(evt) {
-                $rootScope.$apply(function() {
+                $rootScope.$apply(function () {
                     $rootScope.isLoggedIn = false;
                     $location.path('/');
                 });
@@ -610,7 +615,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
 
     }]);
 
-promod.factory('CommonOperation', ['$resource', function($resource) {
+promod.factory('CommonOperation', ['$resource', function ($resource) {
 
         var serverURL = 'http://68.169.56.112';
         var restCommonService = $resource(

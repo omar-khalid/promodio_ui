@@ -11,6 +11,7 @@ promodControllers.controller('ListennowController', ['$scope', '$interval', '$ro
         $rootScope.clearAlertMessages();
         $scope.currentTrack = {title: '  '};
         $rootScope.currentTrack={};
+        $rootScope.shouldPlayNextTrack = false;
         $scope.trackLoaded = false;
         $scope.trackLoadStatus = 0;//0 - initial, 1 - processing, 2 - success, 3 - failure
         $scope.playingTrack = false;
@@ -137,6 +138,7 @@ promodControllers.controller('ListennowController', ['$scope', '$interval', '$ro
 
                 } else {
                     $scope.trackLoadStatus = 3;
+                    $rootScope.showAlertMessage($rootScope.MESSAGES.NO_LISTEN_NOW_MSG);
                     var msg = $rootScope.RETRIEVE_AUDIO_FAILURE;
                     var type = $rootScope.failure;
                     $rootScope.addMessage(msg, type);

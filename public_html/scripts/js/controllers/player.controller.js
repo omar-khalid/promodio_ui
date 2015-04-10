@@ -163,7 +163,7 @@ promodControllers.controller('PlayerController', ['$scope', '$rootScope', '$http
         };        
         
         /******************Code to handle Next******************/
-        $rootScope.nextSongStatus=0;//0 - initial, 1 - processing, 2 - success, 3 - failure
+        $rootScope.nextSongStatus=0;//0 - initial, 1 - processing, 2 - success, 3 - failure, 4 - interrupted
         $scope.currentTrack = {title: '  '};
         $scope.trackLoaded = false;
         $scope.playingTrack = false;
@@ -174,7 +174,7 @@ promodControllers.controller('PlayerController', ['$scope', '$rootScope', '$http
                 return;
             }                        
             $rootScope.nextSongStatus=1;
-            
+            $rootScope.shouldPlayNextTrack = true;
             $scope.initializeNextSong();
         };
         
@@ -266,13 +266,20 @@ promodControllers.controller('PlayerController', ['$scope', '$rootScope', '$http
             }
         };
         
+        $rootScope.shouldPlayNextTrack = true;
         $scope.playCurrentTrack = function() {
+            if($rootScope.shouldPlayNextTrack !== true){
+                //don't play next loaded track
+                $rootScope.nextSongStatus=4;
+                return;
+            }
             $rootScope.audioPlaylist = [];
             $rootScope.audioPlaylist.push({src: $scope.currentTrack.audioUrl, type: 'audio/mpeg', artist: $scope.currentTrack.album, title: $scope.currentTrack.title});
 
             $timeout(function() {
                 $rootScope.mediaPlayer.play();
             }, 10);
+            $rootScope.currentTrack = {};
             $rootScope.approveListeningSongCredits();
             $scope.playingTrack = true;
             $rootScope.promoteTrack = $scope.currentTrack;
@@ -297,7 +304,8 @@ promodControllers.controller('PlayerController', ['$scope', '$rootScope', '$http
                     $scope.retrievePromotersByAudioID(data.audio_id, $scope.currentAudioURL);
 
                 } else {
-                    $rootScope.nextSongStatus=3;
+                    $rootScope.nextSongStatus=3;                    
+                    $rootScope.showAlertMessage($rootScope.MESSAGES.NO_LISTEN_NOW_MSG);
                     var msg = $rootScope.RETRIEVE_AUDIO_FAILURE;
                     $rootScope.showAlertMessage(msg);
                     var type = $rootScope.failure;

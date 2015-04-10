@@ -86,7 +86,7 @@ promodControllers.controller('MainController', ['$scope', '$rootScope', '$http',
                     $rootScope.$apply(function() {
                         $timeout(function() {
                             $rootScope.login();
-                        }, 500);
+                        }, 600);
                     });
 
                 } else {
@@ -113,7 +113,6 @@ promodControllers.controller('MainController', ['$scope', '$rootScope', '$http',
                     $scope.userform.$setPristine();
                     $rootScope.register = true;
                     $scope.loginProcess();
-
 
                 } else {
                     var msg = $rootScope.REGISTER_USER_FAILURE;
