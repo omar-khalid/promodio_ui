@@ -2,83 +2,80 @@
 <div class="col-xs-12 playlist" argus-page-scrolled="loadMoreOtherUserTracks()"> 
     <!--box1-->
     <div class="row">
-        <div ng-repeat="track in otherUsersTracks track by $index" ng-if="responseCompleted === true">
-            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
+        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3 xs-adjust-r" ng-repeat="track in otherUsersTracks track by $index" ng-if="responseCompleted === true">
 
-                <div class="col-xs-12 no-padding playlist-box">
+            <div class="col-xs-12 no-padding playlist-box">
 
-                    <div class="col-xs-12 song-banner text-center" ng-if="track.iconURL !== ''" ng-style="{'background-image':'url('+track.iconURL+')'}" ng-mouseenter="play = false" ng-mouseleave="play = true">
-                        <div class="absolute-center track-time"> 
-                            <span class="track-play-circle" ng-class="{'track-play-enter': play === false , 'track-play-leave': play === true}" ng-if="play === false">
-                                <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id !== track.id" ng-click="playNow(track);"></i>
-                                <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id === track.id && !$parent.mediaPlayer.playing" ng-click="$parent.mediaPlayer.play();"></i>
-                                <i class="fa fa-pause pointer" ng-show="$parent.currentTrack.id === track.id && $parent.mediaPlayer.playing" ng-click="$parent.mediaPlayer.pause();"></i>
-                            </span>
-                            <br>
-                            <span ng-show="track.length">
-                                {{(track.length - (track.length % 60)) / 60}}:{{(track.length % 60) < 10 && '0' + (track.length % 60) || (track.length % 60)}}
-                            </span>
-                        </div>
-                        <div ng-show="track.isMyPromotion===true" ng-click="removeMyOtherPromotion(track,$index)" class="green-circle img-circle pointer"><i class="fa fa-check"></i></div>
-                        <div ng-show="!track.isMyPromotion===true" ng-click="addMyOtherPromotion(track)" class="plus-circle  img-circle pointer">+</div>
+                <div class="col-xs-12 song-banner text-center" ng-if="track.iconURL !== ''" ng-style="{'background-image':'url('+track.iconURL+')'}" ng-mouseenter="play = false" ng-mouseleave="play = true">
+                    <div class="absolute-center track-time"> 
+                        <span class="track-play-circle" ng-class="{'track-play-enter': play === false , 'track-play-leave': play === true}" ng-if="play === false">
+                            <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id !== track.id" ng-click="playNow(track);"></i>
+                            <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id === track.id && !$parent.mediaPlayer.playing" ng-click="$parent.mediaPlayer.play();"></i>
+                            <i class="fa fa-pause pointer" ng-show="$parent.currentTrack.id === track.id && $parent.mediaPlayer.playing" ng-click="$parent.mediaPlayer.pause();"></i>
+                        </span>
+                        <br>
+                        <span ng-show="track.length">
+                            {{(track.length - (track.length % 60)) / 60}}:{{(track.length % 60) < 10 && '0' + (track.length % 60) || (track.length % 60)}}
+                        </span>
                     </div>
-                    <div class="col-xs-12 song-banner text-center" ng-if="track.iconURL === ''" ng-style="{'background-image':'url('+$parent.DEFAULT.TRACK_ICON_URL+')'}" ng-mouseenter="play = false" ng-mouseleave="play = true">
-                        <div class="absolute-center track-time"> 
-                            <span class="track-play-circle" ng-class="{'track-play-enter': play === false , 'track-play-leave': play === true}" ng-if="play === false">
-                                <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id !== track.id" ng-click="playNow(track);"></i>
-                                <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id === track.id && !$parent.mediaPlayer.playing" ng-click="$parent.mediaPlayer.play();"></i>
-                                <i class="fa fa-pause pointer" ng-show="$parent.currentTrack.id === track.id && $parent.mediaPlayer.playing" ng-click="$parent.mediaPlayer.pause();"></i>
-                            </span>
-                            <br>
-                            <span ng-show="track.length">
-                                {{(track.length - (track.length % 60)) / 60}}:{{(track.length % 60) < 10 && '0' + (track.length % 60) || (track.length % 60)}}
-                            </span>
-                        </div>
-                        <div ng-show="track.isMyPromotion===true" ng-click="removeMyOtherPromotion(track,$index)" class="green-circle img-circle pointer"><i class="fa fa-check"></i></div>
-                        <div ng-show="!track.isMyPromotion===true" ng-click="addMyOtherPromotion(track)" class="plus-circle  img-circle pointer">+</div>
+                    <div ng-show="track.isMyPromotion === true" ng-click="removeMyOtherPromotion(track, $index)" class="green-circle img-circle pointer"><i class="fa fa-check"></i></div>
+                    <div ng-show="!track.isMyPromotion === true" ng-click="addMyOtherPromotion(track)" class="plus-circle  img-circle pointer">+</div>
+                </div>
+                <div class="col-xs-12 song-banner text-center" ng-if="track.iconURL === ''" ng-style="{'background-image':'url('+$parent.DEFAULT.TRACK_ICON_URL+')'}" ng-mouseenter="play = false" ng-mouseleave="play = true">
+                    <div class="absolute-center track-time"> 
+                        <span class="track-play-circle" ng-class="{'track-play-enter': play === false , 'track-play-leave': play === true}" ng-if="play === false">
+                            <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id !== track.id" ng-click="playNow(track);"></i>
+                            <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id === track.id && !$parent.mediaPlayer.playing" ng-click="$parent.mediaPlayer.play();"></i>
+                            <i class="fa fa-pause pointer" ng-show="$parent.currentTrack.id === track.id && $parent.mediaPlayer.playing" ng-click="$parent.mediaPlayer.pause();"></i>
+                        </span>
+                        <br>
+                        <span ng-show="track.length">
+                            {{(track.length - (track.length % 60)) / 60}}:{{(track.length % 60) < 10 && '0' + (track.length % 60) || (track.length % 60)}}
+                        </span>
                     </div>
+                    <div ng-show="track.isMyPromotion === true" ng-click="removeMyOtherPromotion(track, $index)" class="green-circle img-circle pointer"><i class="fa fa-check"></i></div>
+                    <div ng-show="!track.isMyPromotion === true" ng-click="addMyOtherPromotion(track)" class="plus-circle  img-circle pointer">+</div>
+                </div>
 
-                    <div class="playlist-wrapper">
-                        <!--<div class="plus-circle  img-circle pointer">+</div>-->
-                        <div class="col-xs-12"> Upload by </div>
-                        <div class="col-xs-12">
-                            <div class="small-text user-img img-circle">
-                                <img class="img-responsive-icon" ng-if="track.imageURL !== ''" ng-src="{{track.imageURL}}"/>
-                                <img class="img-responsive-icon" ng-if="track.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
-                            </div>
-
-                            <div class="small-text headphones text-center no-padding">6,755 plays</div>
-                            <div class="small-text time text-center no-padding"><span ng-show="track.length">{{(track.length - (track.length % 60)) / 60}}min{{track.length % 60}}sec</span></div>
-                            <div class="small-text uploaded text-center no-padding">4 days ago</div>
-                        </div>
-                        <div class="col-xs-12">&nbsp;</div>
-                        <div class="col-xs-12">Promoted by </div>
-                        <div class="col-xs-12"> 
-                            <ul id="promotedby">
-                                <li class="user-img img-circle" ng-repeat="promoter in track.promoters track by $index"  ng-if="$index < 4">
-                                    <img ng-if="promoter.imageURL !== ''" class="img-responsive-icon" ng-src="{{promoter.imageURL}}"/>
-                                    <img class="img-responsive-icon" ng-if="promoter.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
-                                </li>
-                                <li class="img-circle text-center user-more pointer" ng-if="track.promoters.length > 4" ng-click="showAllPromoters(track.promoters);">
-                                    +{{track.promoters.length - 4}}
-                                </li>
-                                <li class="user-more img-circle text-center" ng-if="track.promoters.length === 0">
-                                    0
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <hr class="playlistline">
-                    <!--                <div class="col-xs-5">
-                                        <button class="btn btn-sm btn-download" style="background:none;"><i class="fa fa-upload"></i>&nbsp;DOWNLOAD</button>
-                                    </div>-->
+                <div class="playlist-wrapper">
+                    <!--<div class="plus-circle  img-circle pointer">+</div>-->
+                    <div class="col-xs-12"> Upload by </div>
                     <div class="col-xs-12">
-                        <button class="btn-addfavorites pull-right" disabled title="In progress"><i class="fa fa-heart"></i>&nbsp;ADD TO FAVORITES</button>
+                        <div class="small-text user-img img-circle">
+                            <img class="img-responsive-icon" ng-if="track.imageURL !== ''" ng-src="{{track.imageURL}}"/>
+                            <img class="img-responsive-icon" ng-if="track.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
+                        </div>
+
+                        <div class="small-text headphones text-center no-padding">6,755 plays</div>
+                        <div class="small-text time text-center no-padding"><span ng-show="track.length">{{(track.length - (track.length % 60)) / 60}}m{{track.length % 60}}s</span></div>
+                        <div class="small-text uploaded text-center no-padding">4 days ago</div>
                     </div>
+                    <div class="col-xs-12">&nbsp;</div>
+                    <div class="col-xs-12">Promoted by </div>
+                    <div class="col-xs-12"> 
+                        <ul id="promotedby">
+                            <li class="user-img img-circle" ng-repeat="promoter in track.promoters track by $index"  ng-if="$index < 4">
+                                <img ng-if="promoter.imageURL !== ''" class="img-responsive-icon" ng-src="{{promoter.imageURL}}"/>
+                                <img class="img-responsive-icon" ng-if="promoter.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
+                            </li>
+                            <li class="img-circle text-center user-more pointer" ng-if="track.promoters.length > 4" ng-click="showAllPromoters(track.promoters);">
+                                +{{track.promoters.length - 4}}
+                            </li>
+                            <li class="user-more img-circle text-center" ng-if="track.promoters.length === 0">
+                                0
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <hr class="playlistline">
+                <!--                <div class="col-xs-5">
+                                    <button class="btn btn-sm btn-download" style="background:none;"><i class="fa fa-upload"></i>&nbsp;DOWNLOAD</button>
+                                </div>-->
+                <div class="col-xs-12">
+                    <button class="btn-addfavorites pull-right" disabled title="In progress"><i class="fa fa-heart"></i>&nbsp;ADD TO FAVORITES</button>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="clearfix"></div>
