@@ -2,7 +2,7 @@
 <div class="col-xs-12 playlist" argus-page-scrolled="loadMoreOtherUserTracks()"> 
     <!--box1-->
     <div class="row">
-        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3 xs-adjust-r" ng-repeat="track in otherUsersTracks track by $index" ng-if="responseCompleted === true">
+        <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3 xs-adjust-r" ng-repeat="track in otherUsersTracks track by $index" >
 
             <div class="col-xs-12 no-padding playlist-box">
 
@@ -42,8 +42,8 @@
                     <div class="col-xs-12"> Upload by </div>
                     <div class="col-xs-12">
                         <div class="small-text user-img img-circle">
-                            <img class="img-responsive-icon" ng-if="track.imageURL !== ''" ng-src="{{track.imageURL}}"/>
-                            <img class="img-responsive-icon" ng-if="track.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
+                            <img class="img-responsive-icon pointer" ng-if="track.imageURL !== ''" ng-click="loadAudioTracksV1(track.ownerId, false)" ng-src="{{track.imageURL}}"/>
+                            <img class="img-responsive-icon pointer" ng-if="track.imageURL === ''" ng-click="loadAudioTracksV1(track.ownerId, false)" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
                         </div>
 
                         <div class="small-text headphones text-center no-padding">6,755 plays</div>
@@ -55,8 +55,8 @@
                     <div class="col-xs-12"> 
                         <ul id="promotedby">
                             <li class="user-img img-circle" ng-repeat="promoter in track.promoters track by $index"  ng-if="$index < 4">
-                                <img ng-if="promoter.imageURL !== ''" class="img-responsive-icon" ng-src="{{promoter.imageURL}}"/>
-                                <img class="img-responsive-icon" ng-if="promoter.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
+                                <img ng-if="promoter.imageURL !== ''" class="img-responsive-icon pointer"  ng-click="loadAudioTracksV1(promoter.id, false, promoter)" ng-src="{{promoter.imageURL}}"/>
+                                <img class="img-responsive-icon pointer" ng-if="promoter.imageURL === ''"  ng-click="loadAudioTracksV1(promoter.id, false, promoter)" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
                             </li>
                             <li class="img-circle text-center user-more pointer" ng-if="track.promoters.length > 4" ng-click="showAllPromoters(track.promoters);">
                                 +{{track.promoters.length - 4}}
@@ -78,9 +78,21 @@
             </div>
         </div>
     </div>
+    <div class="row" ng-if="otherUsersAudioIds.length === 0 && noOtherTracksFound" ng-cloak>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                Songs do not exist
+            </div>
+        </div>
+    </div>
     <div class="clearfix"></div>
-    <div class="col-xs-12 col-md-12">&nbsp;</div>
-    <div class="col-xs-12 col-md-12" ng-if="!otherUsersTracksAvailableToLoad">
+    <div class="col-xs-12 col-md-12">&nbsp;</div>    
+    <div class="col-xs-12 col-md-12" ng-show="otherUsersTracksLoadStatus === 1">
+        <center>            
+            <span ng-show="otherUsersTracksLoadStatus === 1"><img class="img-responsive" src="images/loading-more.png" /></span>
+        </center>
+    </div>
+<!--    <div class="col-xs-12 col-md-12" ng-if="!otherUsersTracksAvailableToLoad">
         <center>            
             <span ng-if="!otherUsersTracksAvailableToLoad && otherUsersTracksLoadStatus === 1"><img class="img-responsive" src="images/loading-more.png" /></span>
         </center>
@@ -90,7 +102,7 @@
             <a class="btn btn-promod" ng-click="loadMoreOtherUserTracks()" ng-if="otherUsersTracksAvailableToLoad && otherUsersTracksLoadStatus === 2">LOAD MORE</a>
             <span ng-if="otherUsersTracksAvailableToLoad && otherUsersTracksLoadStatus === 1"><img class="img-responsive" src="images/loading-more.png" /></span>
         </center>
-    </div>
+    </div>-->
 
 </div>
 <!--//box1--> 

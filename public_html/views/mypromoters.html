@@ -42,9 +42,9 @@
     <div class="track-promoters">
         <div class="col-xs-12 text-center">
             <ul class="track-promoters-tab" style="display: inline-block;">
-                <li class="pointer" ng-click="$parent.section = 1" ng-class="{'promoters-tab' : $parent.section === 1, 'tracks-tab' : $parent.section === 2}"><span ng-click="promotersTrackView = false;
-                            currentTracks = 8;">TRACKS <span class="badge bg-promo"><span ng-bind="tracksIds.length > 0 && tracksIds.length || 0"></span></span></span></li>
-                <li class="pointer" ng-click="$parent.section = 2" ng-class="{'promoters-tab' : $parent.section === 2, 'tracks-tab' : $parent.section === 1}"><span ng-click="promotersTrackView = false;
+                <li class="pointer" ng-click="$parent.section = 1" ng-class="{'promoters-tab' : $parent.section === 1, 'tracks-tab' : $parent.section === 2}"><span ng-click="
+                    currentTracks = 8;">TRACKS <span class="badge bg-promo"><span ng-show="!promotersTrackView" ng-bind="tracksIds.length > 0 && tracksIds.length || 0"></span><span ng-show="promotersTrackView" ng-bind="otherUsersTracks.length > 0 && otherUsersTracks.length || 0"></span></li>
+                <li class="pointer" ng-click="$parent.section = 2" ng-class="{'promoters-tab' : $parent.section === 2, 'tracks-tab' : $parent.section === 1}"><span ng-click="
                             currentTracks = 8;
                             otherUsersTracksAvailableToLoad = false;">PROMOTERS <span class="badge bg-promo"><span ng-bind="promoters.length > 0 && promoters.length || 0"></span></span></span></li>
             </ul>
@@ -53,8 +53,12 @@
         <div class="clearfix"></div>
     </div>
 
-    <div ng-show='$parent.section === 1'>
+    <div ng-show='$parent.section === 1 && $parent.isMyProfile'>
         <div ng-include src="'views/tracks.html'"></div>
+    </div>
+
+    <div ng-show='$parent.section === 1 && !$parent.isMyProfile'>
+        <div ng-include src="'views/promoterstrack.html'"></div>
     </div>
 
     <div ng-show='$parent.section === 2'>

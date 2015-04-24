@@ -216,17 +216,20 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
                     $rootScope.showAlertMessage($rootScope.MESSAGES.SONG_LISTENING_CREDIT_PAYMENT_SUCCESS);
                     var msg = $rootScope.MESSAGES.SONG_LISTENING_CREDIT_PAYMENT_SUCCESS;
                     var type = $rootScope.success;
-                    $rootScope.addMessage(msg, type);
+                    //$rootScope.addMessage(msg, type);                    
                 } else {
                     $rootScope.showAlertMessage($rootScope.MESSAGES.UPDATE_CREDIT_FAILURE);
                 }
+                $timeout(function () {
+                    $rootScope.closePopupAlertMessage();
+                }, 4000);
             }
 
             function failure(response) {
                 $rootScope.showAlertMessage($rootScope.MESSAGES.UPDATE_CREDIT_FAILURE + "\nServer responded with " + response.status + " " + response.statusText);
                 var msg = $rootScope.MESSAGES.UPDATE_CREDIT_FAILURE;
                 var type = $rootScope.failure;
-                $rootScope.addMessage(msg, type);
+                //$rootScope.addMessage(msg, type);
             }
 
             CommonOperation.getUser(success, failure);
@@ -544,12 +547,37 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
             $rootScope.alertMsg.message = msg;
             $('#alertMessageModal').modal('show');
         };
+        $rootScope.closePopupAlertMessage = function() {            
+            $('#alertMessageModal').modal('hide');
+        };
 
         $rootScope.backToProfile = function() {
             $('#promoteTrackModal').modal('hide');
             $('#demoteTrackModal').modal('hide');
 //            $location.path('/home');
         };
+        $rootScope.loadAudioTracksV1 = function(userId, isViewPromoters, promoter){
+            
+            if(userId===undefined || userId===null || userId==='')
+                return;
+            $rootScope.trackLoadData.ownerId = userId;            
+            if(isViewPromoters!==null)
+                $rootScope.trackLoadData.isViewPromoters = isViewPromoters;
+            if(promoter!==null)
+                $rootScope.trackLoadData.promoter = promoter;
+            if($rootScope.session.id!==undefined && $rootScope.session.id!==null && $rootScope.session.id!== userId)
+                $rootScope.trackLoadData.isLoadOthersTrack = true;
+            else
+                $rootScope.trackLoadData.isLoadOthersTrack = false;                
+            
+            if($location.path() !== '/promod'){
+                $rootScope.navigateToPage("/promod",1);
+            }else{
+                $rootScope.$broadcast("loadAudioTracksV1");
+            }
+            
+        };
+        $rootScope.trackLoadData = {'isLoadOthersTrack': false, ownerId: ''};        
         $rootScope.TRACK_LOAD_LIMIT = 4;
         $rootScope.DEFAULT = {
             TRACK_ALBUM: 'Default Album',
@@ -564,7 +592,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function($
         $rootScope.MESSAGES = {
             SONG_LISTENING_CREDIT_PAYMENT_FAILURE: 'Sorry ! Unable to pay you listening credits',
             //SONG_LISTENING_CREDIT_PAYMENT_SUCCESS: 'Congratulation ! you have earned'+$rootScope.currentSongEarnings+' credits for listening this song',
-            SONG_LISTENING_CREDIT_PAYMENT_SUCCESS: 'Congratulation ! you have earned some credits for listening this song',
+            SONG_LISTENING_CREDIT_PAYMENT_SUCCESS: 'Congratulation ! you have earned 1 credit for listening this song',
             UPDATE_CREDIT_FAILURE: 'Oops ! Unable to update you credits',
             NO_SONG_FOUND_TO_PLAY: 'No song selected to play',
             WAIT_PROCESSING_LAST_REQUEST: 'Please wait !\nProcessing your last request',

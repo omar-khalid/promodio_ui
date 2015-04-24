@@ -279,6 +279,7 @@ promodControllers.controller('PlayerController', ['$scope', '$rootScope', '$http
             $timeout(function() {
                 $rootScope.mediaPlayer.play();
             }, 10);
+            $rootScope.$broadcast("stopPlayingTrack");
             $rootScope.currentTrack = {};
             $rootScope.approveListeningSongCredits();
             $scope.playingTrack = true;

@@ -128,7 +128,7 @@
                     </div>
                     <div class="col-xs-12">&nbsp;&nbsp;</div>
                     <div class="col-xs-12 text-center">
-                        <button class="btn btn-disable" ng-click="backToProfile();">Back to Profile</button>
+                        <button class="btn btn-disable" ng-click="backToProfile();">Ok</button>
                         &nbsp;&nbsp;
                         <button class="btn btn-promod" ng-click="playNextSong()" data-dismiss="modal" ng-class="{'track-progress': nextSongStatus===1}">Next Track</button>
                     </div>
@@ -194,8 +194,8 @@
 
                         <ul id="user-profile">
                             <li ng-repeat="promoter in $parent.promoterList" class='pointer'>
-                                <img ng-if="promoter.imageURL !== ''" ng-src="{{promoter.imageURL}}" class="img-responsive-icon img-circle"/>
-                                <img ng-if="promoter.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle"/>
+                                <img ng-if="promoter.imageURL !== ''" data-dismiss="modal" ng-click="loadAudioTracksV1(promoter.id, false, promoter);" ng-src="{{promoter.imageURL}}" class="img-responsive-icon img-circle"/>
+                                <img ng-if="promoter.imageURL === ''" data-dismiss="modal" ng-click="loadAudioTracksV1(promoter.id, false, promoter)" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle"/>
                                 <img src="images/tickmark.png" class="tickmark"/>
                             </li>
                         </ul>
@@ -267,7 +267,7 @@
                     </div>
                     <div class="col-xs-12">&nbsp;&nbsp;</div>
                     <div class="col-xs-12 text-center">
-                        <button class="btn btn-disable" ng-click="backToProfile();">Back to Profile</button>
+                        <button class="btn btn-disable" ng-click="backToProfile();">Ok</button>
                         &nbsp;&nbsp;
                         <button class="btn btn-promod" ng-click="playNextSong()" data-dismiss="modal" ng-class="{'track-progress': nextSongStatus===1}">Next Track</button>
                     </div>

@@ -32,6 +32,13 @@ promodControllers.controller('ListennowController', ['$scope', '$interval', '$ro
             $rootScope.backupPromoteTrack($scope.currentTrack,$scope.currentTrack.ownerInfo);//(promoteTrack,promoterInfo)
             $rootScope.updateCurrentPlayingTrack($scope.currentTrack,$scope.currentTrack.ownerInfo);//(track,ownerInfo)
         };
+        $rootScope.stopPlayingTrack=function(){
+           $scope.playingTrack = false; 
+        };
+        
+        $rootScope.$on("stopPlayingTrack",function(){
+            $rootScope.stopPlayingTrack();
+        });
 
 
  /*       $rootScope.listeningSongCreditDetails = {songId: '', creditAvailable: false, playedDuration: 0, creditApproved: false};
@@ -342,14 +349,22 @@ promodControllers.controller('ListennowController', ['$scope', '$interval', '$ro
                 return;
             }
             
-            $rootScope.audioPlaylist = [];
-            $scope.currentTrack = {title: ' '};            
+            //$rootScope.audioPlaylist = [];
+            //$scope.currentTrack = {title: ' '};            
             $scope.isDirectPlay = true;
-            $rootScope.promoteTrack = {};
-            $rootScope.promoterInfo = {};            
-            $rootScope.updateCurrentPlayingTrack({},{});//(track,ownerInfo)
+            //$rootScope.promoteTrack = {};
+            //$rootScope.promoterInfo = {};            
+            //$rootScope.updateCurrentPlayingTrack({},{});//(track,ownerInfo)
             $scope.initializeNextSong();
 
+        };
+        
+        $scope.reportAbuse = function(currentTrack){            
+            var email = 'promodions@gmail.com';
+            var subject = 'Abuse Reporting';
+            var emailBody = 'Hi, This song contains some abusing content. Song Id : '+currentTrack.id+', Song Name : '+currentTrack.title+", Owner Name: "+currentTrack.ownerInfo.first_name+" "+currentTrack.ownerInfo.last_name;            
+            
+            window.location = 'mailto:' + email + '?subject=' + subject + '&body=' + emailBody;            
         };
 
     }

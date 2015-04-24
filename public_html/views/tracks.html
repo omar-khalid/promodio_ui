@@ -42,8 +42,8 @@
                     <div class="col-xs-12"> Upload by </div>
                     <div class="col-xs-12">
                         <div class="small-text user-img img-circle">
-                            <img class="img-responsive-icon" ng-show="track.imageURL !== ''" ng-src="{{track.imageURL}}"/>
-                            <img class="img-responsive-icon" ng-show="track.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
+                            <img class="img-responsive-icon pointer" ng-click="loadAudioTracksV1(track.ownerId, false)" ng-show="track.imageURL !== ''" ng-src="{{track.imageURL}}"/>
+                            <img class="img-responsive-icon pointer" ng-click="loadAudioTracksV1(track.ownerId, false)" ng-show="track.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
                         </div>
 
                         <div class="small-text headphones text-center no-padding">6,755 plays</div>
@@ -55,8 +55,8 @@
                     <div class="col-xs-12"> 
                         <ul id="promotedby">
                             <li class="user-img img-circle" ng-repeat="promoter in track.promoters track by $index"  ng-if="$index < 4">
-                                <img ng-show="promoter.imageURL !== ''" class="img-responsive-icon" ng-src="{{promoter.imageURL}}"/>
-                                <img class="img-responsive-icon" ng-show="promoter.imageURL === ''" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
+                                <img ng-show="promoter.imageURL !== ''" class="img-responsive-icon pointer" ng-click="loadAudioTracksV1(promoter.id, false, promoter)"  ng-src="{{promoter.imageURL}}"/>
+                                <img class="img-responsive-icon pointer" ng-show="promoter.imageURL === ''" ng-click="loadAudioTracksV1(promoter.id, false, promoter)" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
                             </li>
                             <li class="img-circle text-center user-more pointer" ng-if="track.promoters.length > 4" ng-click="showAllPromoters(track.promoters);">
                                 +{{track.promoters.length - 4}}

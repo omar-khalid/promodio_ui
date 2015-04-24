@@ -19,8 +19,8 @@
                 <li class="col-xs-8  col-sm-4 col-lg-4 col-md-4 user downarrow dropdown text-center"  data-toggle="dropdown"><span class="avtaar-img img-circle" ng-if="profileImageFound" ng-cloak> <img ng-src="{{profileImageUrl !== undefined && profileImageUrl|| DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon"/></span></li>
                 <ul class="dropdown-menu" id="dropdown-menu" role="menu" aria-labelledby="dLabel">
                     <li class="pointer"><a href="#/settings"><i class="fa fa-cog"></i>Settings</a></li>
-                    <li class="pointer"><a ng-click="navigateToPage('/promod', 1);"><i class="fa fa-user"></i>My Profile</a></li>
-                    <li class="pointer"><a ng-click="navigateToPage('/promod', 2)"><i class="fa fa-arrow-circle-o-up"></i>My Promoters</a></li>
+                    <li class="pointer"><a ng-click="loadAudioTracksV1(session.id, false);"><i class="fa fa-user"></i>My Profile</a></li>
+                    <li class="pointer"><a ng-click="loadAudioTracksV1(session.id, true);"><i class="fa fa-arrow-circle-o-up"></i>My Promoters</a></li>
                     <li class="pointer" ng-click="logout();"><a href=""><i class="fa fa-sign-out"></i>Logout</a></li>
                 </ul>
                 <li class="upload col-xs-2 col-sm-4 col-lg-4 col-md-4 text-center pointer" ng-click="navigateToPage('/addsong')"><i class="fa fa-plus-square-o square-icn"></i>Upload</li>
