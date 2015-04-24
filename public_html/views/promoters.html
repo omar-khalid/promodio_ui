@@ -1,6 +1,5 @@
 <!--section tracks-->
 <div class="col-xs-10 col-xs-offset-1 text-center" ng-if='promoters.length > 0' ng-cloak>
-
     <ul id="user-profile">
         <li ng-repeat="promoter in promoters"  ng-click='$parent.loadAudioTracksV1(promoter.id, false, promoter)' class='pointer'>
             <img ng-if="promoter.imageURL !== ''" ng-src="{{promoter.imageURL}}" class="img-responsive-icon img-circle"/>
@@ -9,14 +8,14 @@
         </li>
     </ul>
 </div>
-
+<div class="clearfix"></div>
+<div class="col-xs-12 col-md-12">&nbsp;</div>
 <div class="col-xs-12 col-md-12" ng-show="otherUsersTracksLoadStatus === 1 || tracksLoadStatus === 1">
     <center>            
         <span><img class="img-responsive" src="images/loading-more.png" /></span>
     </center>
-    <br/>
 </div>
-
+<div class="col-xs-12 col-md-12">&nbsp;</div>
 <div ng-if="promoters.length === 0 && !(otherUsersTracksLoadStatus === 1 || tracksLoadStatus === 1)" ng-cloak>
     <br/><br/>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -13,7 +13,7 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-4 col-xs-4">
                                 <ul id="user-profile01">
-                                    <li ><img ng-click="loadAudioTracksV1(currentTrack.ownerId, false, {'id':currentTrack.ownerId, 'imageURL': currentTrack.imageURL})" ng-src="{{currentTrack.imageURL !== '' && currentTrack.imageURL|| $parent.DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle pointer"/></li>
+                                    <li ><img ng-click="loadAudioTracksV1(currentTrack.ownerId, false, {'id': currentTrack.ownerId, 'imageURL': currentTrack.imageURL})" ng-src="{{currentTrack.imageURL !== '' && currentTrack.imageURL|| $parent.DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle pointer"/></li>
                                 </ul>
                             </div>
                             <div class="col-lg-12 col-md-12 col-xs-3 col-sm-4">
@@ -28,9 +28,9 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6  col-lg-pull-6 col-md-pull-6 text-center ">
-                        <div class="current-song"><h3 class="songtitle text-center text-cut">{{currentTrack.title != '' && currentTrack.title|| $parent.DEFAULT.TRACK_TITLE}}</h3>
-                            <img class="img-responsive" style="height: 350px;width:350px;" ng-src="{{currentTrack.iconURL!='' && currentTrack.iconURL || $parent.DEFAULT.TRACK_ICON_URL }}"/>
-                        <div class="current-song"><h3 class="songtitle text-center text-cut" style="padding-top: 5px 0px;" ng-show="trackLoaded">{{currentTrack.title != '' && currentTrack.title|| $parent.DEFAULT.TRACK_TITLE}}</h3> <img ng-src="{{currentTrack.iconURL !== '' && currentTrack.iconURL || $parent.DEFAULT.TRACK_ICON_URL}}" class="img-responsive img-responsive-icon"/>
+                        <div class="current-song">
+                            <h3 class="songtitle text-center text-cut" style="padding-top: 5px 0px;">{{currentTrack.title != '' && currentTrack.title|| $parent.DEFAULT.TRACK_TITLE}}</h3> 
+                            <img ng-src="{{currentTrack.iconURL !== '' && currentTrack.iconURL|| $parent.DEFAULT.TRACK_ICON_URL}}" class="img-responsive img-responsive-icon"/>
                             <div class="vinyl"><img src="images/vinyl.png" class="img-responsive"/></div>
                             <div class="text-center listen-now">
                                 <span class="play-circle" ng-click="playCurrentTrack()" ng-show="!mediaPlayer.playing || !playingTrack" ng-class="{'pointer' : trackLoadStatus === 2, 'track-progress' : trackLoadStatus === 1, 'link-disabled' : (trackLoadStatus !== 1 && trackLoadStatus !== 2)}"><i class="fa fa-play"></i></span>

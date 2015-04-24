@@ -9,7 +9,7 @@
                 <div class="col-xs-12 song-banner text-center" ng-if="track.iconURL !== ''" ng-style="{'background-image':'url('+track.iconURL+')'}" ng-mouseenter="play = false" ng-mouseleave="play = true">
                     <div class="absolute-center01 track-time"> 
                         <h3 class="songtitle01 text-center text-cut" style="padding-top: 5px 0px;">{{track.title != '' && track.title|| $parent.DEFAULT.TRACK_TITLE}}</h3>
-                        <div class="subtitle">Texfgdfgfdg</div>
+                        <!--<div class="subtitle"></div>-->
                         <span class="track-play-circle" ng-class="{'track-play-enter': play === false , 'track-play-leave': play === true}" ng-if="play === false">
                             <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id !== track.id" ng-click="playNow(track);"></i>
                             <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id === track.id && !$parent.mediaPlayer.playing" ng-click="$parent.mediaPlayer.play();"></i>
@@ -26,7 +26,7 @@
                 <div class="col-xs-12 song-banner text-center" ng-if="track.iconURL === ''" ng-style="{'background-image':'url('+$parent.DEFAULT.TRACK_ICON_URL+')'}" ng-mouseenter="play = false" ng-mouseleave="play = true">
                     <div class="absolute-center01 track-time"> 
                         <h3 class="songtitle01 text-center text-cut" style="padding-top: 5px 0px;">{{track.title != '' && track.title|| $parent.DEFAULT.TRACK_TITLE}}</h3>
-                        <div class="subtitle">Texfgdfgfdg</div>
+                        <!--<div class="subtitle"></div>-->
                         <span class="track-play-circle" ng-class="{'track-play-enter': play === false , 'track-play-leave': play === true}" ng-if="play === false">
                             <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id !== track.id" ng-click="playNow(track);"></i>
                             <i class="fa fa-play pointer" ng-show="$parent.currentTrack.id === track.id && !$parent.mediaPlayer.playing" ng-click="$parent.mediaPlayer.play();"></i>

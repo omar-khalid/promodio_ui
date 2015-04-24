@@ -184,7 +184,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
 
                 var user = {};
 
-                if (data.user_images.length > 0) {
+                if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
                     user.imageURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
                     user.id = data.user_images[data.user_images.length - 1].user_id;
                 } else {
@@ -219,7 +219,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
             };
 
             var successIconImage = function (data) {
-                if (data.user_images.length > 0) {
+                if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
                     audioData.iconURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
                 } else {
                     audioData.iconURL = "";
@@ -236,7 +236,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 audioData.promoters = promoters;
                 audioData.isMyPromotion = isMyPromotion;
 
-                if (data.user_images.length > 0) {
+                if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
                     audioData.imageURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
                 } else {
                     audioData.imageURL = "";
@@ -449,7 +449,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
 
                 var user = {};
 
-                if (data.user_images.length > 0) {
+                if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
                     user.imageURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
                     user.id = data.user_images[data.user_images.length - 1].user_id;
                 } else {
@@ -485,7 +485,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
 
             var successUserIcon = function (data) {
 
-                if (data.user_images.length > 0) {
+                if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
                     audioData.iconURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
                 } else {
                     audioData.iconURL = "";
@@ -509,7 +509,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 audioData.promoters = promoters;
                 audioData.isMyPromotion = isMyPromotion;
 
-                if (data.user_images.length > 0) {
+                if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
                     audioData.imageURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
                 } else {
                     audioData.imageURL = "";
