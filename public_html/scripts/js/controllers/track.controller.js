@@ -322,8 +322,15 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 return false;
             return $scope.otherUsersAudioIds.indexOf(audioId) > -1;
         };
+        
+        $scope.otherUsersTrackExists = function (audioId) {
+            if (audioId === undefined || audioId === '')
+                return false;
+            return $scope.otherUsersTrackIds.indexOf(audioId) > -1;
+        };
 
         $scope.otherUsersTracks = [];
+        $scope.otherUsersTrackIds = [];
         $scope.otherUsersTotalTracks = 0;
         $scope.otherUsersAudioIds = [];
         $scope.otherUsersAudios = [];
@@ -356,6 +363,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
         $scope.loadTrackByUser = function (userId) {
 
             $scope.otherUsersTracks = [];
+            $scope.otherUsersTrackIds = [];
             $scope.otherUsersAudioIds = [];
             $scope.otherUsersAudios = [];
             var success = function (data) {
@@ -366,7 +374,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                     $scope.otherUsersTotalTracks = $scope.audios.length;
 
                     angular.forEach($scope.audios, function (audio) {
-
+                        
                         if ($scope.otherUsersAudioExists(audio.id)) {
                             //audio already exists no need to add
                         } else {
@@ -514,8 +522,9 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 } else {
                     audioData.imageURL = "";
                 }
-                if ($scope.selectedPromoterId === audio.owner_id) {
+                if ($scope.selectedPromoterId === audio.owner_id && !$scope.otherUsersTrackExists(audioData.id)) {
                     $scope.otherUsersTracks.push(audioData);
+                    $scope.otherUsersTrackIds.push(audioData.id);
                     $scope.otherUserTracksLoaded = $scope.otherUserTracksLoaded + 1;
                 }
                 if ($scope.otherUserTracksLoaded === $scope.otherUsersTotalTracksToLoad) {
@@ -543,6 +552,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
             $scope.otherUsersTotalTracks = 0;
             $scope.otherUsersTracksAvailableToLoad = false;
             $scope.otherUsersTracks = [];
+            $scope.otherUsersTrackIds = [];
             $scope.promotersTrackView = true;
             $scope.noOtherTracksFound = false;
             $scope.userProfileImageUrl = promoter.imageURL;
@@ -669,6 +679,14 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 $timeout(function () {
                     $rootScope.mediaPlayer.play();
                 }, 10);
+                
+                //pay credits for listening other users(promoters) song
+                if(!$rootScope.isCurrentUserId(track.ownerId) && $scope.promotersTrackView){                    
+                    $rootScope.listenNowId = track.id;
+                    $rootScope.updateCurrentPlayingTrack(track,{});//(track,ownerInfo)                        
+                    $rootScope.setListeningSongCreditDetails(track.id, true, 0, false);//(songId,creditAvailable,playedDuration,creditApproved);                    
+                    $rootScope.approveListeningSongCredits();
+                }
             };
 
             var failure = function () {

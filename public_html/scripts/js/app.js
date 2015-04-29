@@ -372,7 +372,7 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function (
                                 user.id = promoter.id;
                                 $rootScope.promoters.push(user);
                             }
-                            updateTracks($rootScope.promoteTrack);
+                            //updateTracks($rootScope.promoteTrack);
                             break;
                     }
                     $rootScope.promotionPage = '';
@@ -559,6 +559,16 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function (
             $('#demoteTrackModal').modal('hide');
 //            $location.path('/home');
         };
+        
+        $rootScope.loadListenNowV1 = function(){
+            if ($location.path() === '/listennow') {
+                $rootScope.$broadcast("listenNowV1");
+            }else{
+                $rootScope.navigateToPage('/listennow');
+            }
+            
+        };
+        
         $rootScope.loadAudioTracksV1 = function (userId, isViewPromoters, promoter) {
 
             if (userId === undefined || userId === null || userId === '')

@@ -16,14 +16,14 @@ promodControllers.controller('ListennowController', ['$scope', '$interval', '$ro
         $scope.trackLoadStatus = 0;//0 - initial, 1 - processing, 2 - success, 3 - failure
         $scope.playingTrack = false;
         $rootScope.isDirectPromotion=false;
-        $scope.isDirectPlay = false;
+        $scope.isDirectPlay = true;
         $scope.playCurrentTrack = function() {
             $rootScope.audioPlaylist = [];
             $rootScope.audioPlaylist.push({src: $scope.currentTrack.audioUrl, type: 'audio/mpeg', artist: $scope.currentTrack.album, title: $scope.currentTrack.title});
-
+            
             $timeout(function() {
                 $rootScope.mediaPlayer.play();
-            }, 10);
+            }, 15);
             $rootScope.approveListeningSongCredits();
             $scope.playingTrack = true;
             $rootScope.promoteTrack = $scope.currentTrack;
@@ -366,6 +366,10 @@ promodControllers.controller('ListennowController', ['$scope', '$interval', '$ro
             
             window.location = 'mailto:' + email + '?subject=' + subject + '&body=' + emailBody;            
         };
+        
+        $rootScope.$on("listenNowV1", function () {
+            $scope.skipTrack();
+        });
 
     }
 ]);
