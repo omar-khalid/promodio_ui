@@ -1,7 +1,7 @@
 <!--section promoters-->
 <div class="col-xs-12 playlist" argus-page-scrolled="loadMoreOtherUserTracks()"> 
     <!--box1-->
-    <div class="row">
+    <div class="row">        
         <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3 xs-adjust-r" ng-repeat="track in otherUsersTracks track by $index" >
 
             <div class="col-xs-12 no-padding playlist-box">
@@ -44,8 +44,8 @@
                     <div class="col-xs-12"> Upload by </div>
                     <div class="col-xs-12">
                         <div class="small-text user-img img-circle">
-                            <img class="img-responsive-icon pointer" ng-if="track.imageURL !== ''" ng-click="loadAudioTracksV1(track.ownerId, false)" ng-src="{{track.imageURL}}"/>
-                            <img class="img-responsive-icon pointer" ng-if="track.imageURL === ''" ng-click="loadAudioTracksV1(track.ownerId, false)" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
+                            <img class="img-responsive-icon pointer" ng-if="track.imageURL !== ''" ng-click="loadAudioTracksV1(track.ownerId, false, {'id':track.ownerId, 'imageURL': track.imageURL})" ng-src="{{track.imageURL}}"/>
+                            <img class="img-responsive-icon pointer" ng-if="track.imageURL === ''" ng-click="loadAudioTracksV1(track.ownerId, false, {'id':track.ownerId, 'imageURL': track.imageURL})" ng-src="{{$parent.DEFAULT.TRACK_IMAGE_URL}}"/>
                         </div>
 
                         <div class="small-text headphones text-center no-padding">6,755 plays</div>

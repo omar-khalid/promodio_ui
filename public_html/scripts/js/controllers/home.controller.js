@@ -75,9 +75,9 @@ promodControllers.controller('HomeController', ['$scope', '$rootScope', '$http',
                         if ($scope.audioExists(promotion.audio_id)) {
                             //audio already added no need to add                                                                                   
                         } else {
-                            if($rootScope.currentPage === 'home')
-                                $rootScope.tracksIds.push(promotion.audio_id);                              
-                        }                       
+                            if($rootScope.currentPage === 'home')                                                                
+                                $rootScope.tracksIds.push(promotion.audio_id);
+                            }
                     });
                     $scope.totalTracks = $rootScope.tracksIds.length;                    
                     if($scope.totalTracks>0)                                                
@@ -153,33 +153,35 @@ promodControllers.controller('HomeController', ['$scope', '$rootScope', '$http',
                 var type = $rootScope.failure;
                 $rootScope.addMessage(msg, type);
             };
+        
+            var loadPromoterDetails = function(promoterID){ 
+                var successUser = function(data) {
 
-            var successUser = function(data) {
+                    var user = {};
 
-                var user = {};
+                    if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
+                        user.imageURL = $rootScope.apipath + data.user_images[data.user_images.length-1].image_url;
+                        user.id = data.user_images[data.user_images.length-1].user_id;
+                    } else {
+                        user.imageURL = "";
+                        user.id = promoterID;
+                    }
+    //                
+    //                if(!$scope.promoterExists(user.id)){                    
+    //                    $scope.promotersIds.push(user.id);
+    //                    $scope.promoters.push(user);
+    //                }
 
-                if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
-                    user.imageURL = $rootScope.apipath + data.user_images[data.user_images.length-1].image_url;
-                    user.id = data.user_images[data.user_images.length-1].user_id;
-                } else {
-                    user.imageURL = "";
-                    user.id = promoterId;
-                }
-//                
-//                if(!$scope.promoterExists(user.id)){                    
-//                    $scope.promotersIds.push(user.id);
-//                    $scope.promoters.push(user);
-//                }
-                
-                promoters.push(user);
-                i = i + 1;
+                    promoters.push(user);
+                    i = i + 1;
 
-                if (parseInt(totalPromoters) === parseInt(i)) {
-                    setIconImage();
-                }
+                    if (parseInt(totalPromoters) === parseInt(i)) {
+                        setIconImage();
+                    }
 
+                };
+                UserImageService.getImage({image_type: 'profile', user_id: promoterID}, {}, successUser, failure);
             };
-
             var setIconImage = function() {
                 UserImageService.getImage({image_type: 'icon', user_id: audioData.ownerId}, {}, successIconImage, failure);
             };
@@ -207,8 +209,18 @@ promodControllers.controller('HomeController', ['$scope', '$rootScope', '$http',
                 } else {
                     audioData.imageURL = "";
                 }
-                if($rootScope.currentPage === 'home')
-                    $rootScope.tracks.push(audioData);    
+                if($rootScope.currentPage === 'home'){//add promoted tracks uploaded by other users
+                    if($rootScope.isCurrentUserId(audioData.ownerId)){                       
+                        var index = $rootScope.tracksIds.indexOf(audioData.id);                       
+                        if(index>-1)
+                            $rootScope.tracksIds.splice(index,1);
+                    }else{                        
+                        $rootScope.tracks.push(audioData);
+                    }
+                    
+                        
+                }
+                    
                 $scope.tracksLoaded = $scope.tracksLoaded+1;
                 $scope.responseCompleted = true;
                 
@@ -227,6 +239,7 @@ promodControllers.controller('HomeController', ['$scope', '$rootScope', '$http',
                 if (data.promotions !== undefined) {
 
                     $scope.promotions = data.promotions;
+                    $scope.promotions = $rootScope.removeDuplicatePromotions($scope.promotions);//remove duplicate promotion by the same user
                     totalPromoters = $scope.promotions.length;                    
                     
                     if (totalPromoters > 0) {
@@ -236,7 +249,8 @@ promodControllers.controller('HomeController', ['$scope', '$rootScope', '$http',
                             if($rootScope.isCurrentUserId(promoterId)){
                                 isMyPromotion=true;
                             }
-                            UserImageService.getImage({image_type: 'profile', user_id: promotion.promoter_id}, {}, successUser, failure);
+                            loadPromoterDetails(promoterId);
+                            //UserImageService.getImage({image_type: 'profile', user_id: promotion.promoter_id}, {}, successUser, failure);
                         });
                     } else {
                         setIconImage();

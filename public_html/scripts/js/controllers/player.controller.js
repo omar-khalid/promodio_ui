@@ -410,12 +410,14 @@ promodControllers.controller('PlayerController', ['$scope', '$rootScope', '$http
                 if (data.promotions !== undefined) {
 
                     $scope.promotions = data.promotions;
+                    $scope.promotions = $rootScope.removeDuplicatePromotions($scope.promotions);//remove duplicate promotion by the same user
                     totalPromoters = $scope.promotions.length;
                     if (totalPromoters > 0) {
                         angular.forEach($scope.promotions, function(promotion) {
 
                             promoterId = promotion.promoter_id;
-                            UserImageService.getImage({image_type: 'profile', user_id: promotion.promoter_id}, {}, successUser, failure);
+                            loadPromoterDetails(promoterId);
+                            //UserImageService.getImage({image_type: 'profile', user_id: promotion.promoter_id}, {}, successUser, failure);
                         });
                     } else {
                         setTrack();
@@ -435,6 +437,7 @@ promodControllers.controller('PlayerController', ['$scope', '$rootScope', '$http
                 $rootScope.addMessage(msg, type);
             };
 
+        var loadPromoterDetails = function(promoterID){
             var successUser = function(data) {
 
                 var user = {};
@@ -444,12 +447,14 @@ promodControllers.controller('PlayerController', ['$scope', '$rootScope', '$http
                     user.id = data.user_images[data.user_images.length - 1].user_id;
                 } else {
                     user.imageURL = "";
-                    user.id = promoterId;
+                    user.id = promoterID;
                 }
                 //console.log("image====== "+JSON.stringify(data));
-                //if(!promoterExists(user.id)){                    
-                promoterIds.push(user.id);
-                promoters.push(user);
+                //if(!promoterExists(user.id)){  
+                if(audioData.ownerId!== user.id){
+                    promoterIds.push(user.id);
+                    promoters.push(user);
+                }
                 //}                
 
                 i = i + 1;
@@ -459,6 +464,8 @@ promodControllers.controller('PlayerController', ['$scope', '$rootScope', '$http
                 }
 
             };
+            UserImageService.getImage({image_type: 'profile', user_id: promoterID}, {}, successUser, failure);
+        };
 
             var setIconImage = function() {
                 UserImageService.getImage({image_type: 'icon', user_id: audioData.ownerId}, {}, successIconImage, failure);

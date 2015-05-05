@@ -8,7 +8,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
             $scope.currentTracks = $rootScope.TRACK_LOAD_LIMIT;
             ///////////////////////$scope.retrievePromotedAudios();//retrieve all of your promoted audio
             //$scope.retrieveUploadedAudios();//retrieve all of your uploaded audio (then will call $scope.retrievePromotedAudios();)
-            $scope.loadTracksV1();
+            $rootScope.loadTracksV1();
         });
 
         $rootScope.currentPage = 'tracks';
@@ -179,39 +179,41 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 var type = $rootScope.failure;
                 $rootScope.addMessage(msg, type);
             };
+            var loadPromoterDetails = function(promoterID){
+                var successUser = function (data) {
 
-            var successUser = function (data) {
+                    var user = {};
 
-                var user = {};
+                    if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
+                        user.imageURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
+                        user.id = data.user_images[data.user_images.length - 1].user_id;
+                    } else {
+                        user.imageURL = "";
+                        user.id = promoterID;
+                    }
 
-                if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
-                    user.imageURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
-                    user.id = data.user_images[data.user_images.length - 1].user_id;
-                } else {
-                    user.imageURL = "";
-                    user.id = promoterId;
-                }
-
-                if (!$rootScope.promoterExists(user.id)) {
-                    $rootScope.promotersIds.push(user.id);
-                    $rootScope.promoters.push(user);
-                } else {
-                    var index = $rootScope.promotersIds.indexOf(user.id);
-                    if (index >= 0) {
-                        var oldUser = $rootScope.promoters[index];
-                        if (oldUser.imageURL === "" && user.imageURL !== "") {
-                            $rootScope.promoters[index] = user;
+                    if (!$rootScope.promoterExists(user.id) && audioData.ownerId!== user.id && !$rootScope.isCurrentUserId(user.id)) {
+                        $rootScope.promotersIds.push(user.id);
+                        $rootScope.promoters.push(user);
+                    } else {
+                        var index = $rootScope.promotersIds.indexOf(user.id);
+                        if (index >= 0) {
+                            var oldUser = $rootScope.promoters[index];
+                            if (oldUser.imageURL === "" && user.imageURL !== "") {
+                                $rootScope.promoters[index] = user;
+                            }
                         }
                     }
-                }
+                    if(audioData.ownerId!==user.id)
+                        promoters.push(user);
+                    i = i + 1;
 
-                promoters.push(user);
-                i = i + 1;
+                    if (parseInt(totalPromoters) === parseInt(i)) {
+                        setIconImage();
+                    }
 
-                if (parseInt(totalPromoters) === parseInt(i)) {
-                    setIconImage();
-                }
-
+                };
+                UserImageService.getImage({image_type: 'profile', user_id: promoterID}, {}, successUser, failure);
             };
 
             var setIconImage = function () {
@@ -241,9 +243,10 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 } else {
                     audioData.imageURL = "";
                 }
-                if ($rootScope.currentPage === 'tracks' && $scope.audioExists(audioData.id))
+                if ($rootScope.currentPage === 'tracks' && $scope.audioExists(audioData.id) && $scope.trackNotExist(audioData.id)){
                     $rootScope.tracks.push(audioData);
-                $scope.tracksLoaded = $scope.tracksLoaded + 1;
+                    $scope.tracksLoaded = $scope.tracksLoaded + 1;
+                }
                 $scope.responseCompleted = true;
 
                 if ($scope.totalTracksToLoad === $scope.tracksLoaded)
@@ -260,17 +263,19 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 isMyPromotion = false;
                 if (data.promotions !== undefined) {
 
-                    $scope.promotions = data.promotions;
+                    $scope.promotions = data.promotions;                    
+                    $scope.promotions = $rootScope.removeDuplicatePromotions($scope.promotions);//remove duplicate promotion by the same user
                     totalPromoters = $scope.promotions.length;
 
                     if (totalPromoters > 0) {
                         angular.forEach($scope.promotions, function (promotion) {
 
                             promoterId = promotion.promoter_id;
-                            if ($rootScope.isCurrentUserId(promoterId)) {
+                            if ($rootScope.isCurrentUserId(promoterId) && promoterId!==audioData.ownerId) {
                                 isMyPromotion = true;
                             }
-                            UserImageService.getImage({image_type: 'profile', user_id: promotion.promoter_id}, {}, successUser, failure);
+                            loadPromoterDetails(promoterId);
+                            //UserImageService.getImage({image_type: 'profile', user_id: promotion.promoter_id}, {}, successUser, failure);
                         });
                     } else {
                         setIconImage();
@@ -306,6 +311,19 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
 
             AudioService.getAudio({audio_id: audioId}, successAudioData, failure);
 
+        };
+
+        $scope.trackNotExist = function(audioId){
+            var trackIds = [];
+            $.each($rootScope.tracks, function (index, track) {
+                if ($.inArray(track.id, trackIds) === -1) { //check if id value not exits than add it
+                    trackIds.push(track.id);//push promoter_id value in promoterIds                    
+                }
+            });
+            if ($.inArray(audioId, trackIds) === -1)
+                return true;                 
+            else
+                return false;             
         };
 
         $scope.audioExists = function (audioId) {
@@ -424,16 +442,18 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 isMyPromotion = false;
                 if (data.promotions !== undefined) {
 
-                    $scope.promotions = data.promotions;
+                    $scope.promotions = data.promotions;                    
+                    $scope.promotions = $rootScope.removeDuplicatePromotions($scope.promotions);//remove duplicate promotion by the same user
                     totalPromoters = $scope.promotions.length;
 
                     if (totalPromoters > 0) {
                         angular.forEach($scope.promotions, function (promotion) {
                             promoterId = promotion.promoter_id;
-                            if ($rootScope.isCurrentUserId(promoterId)) {
+                            if ($rootScope.isCurrentUserId(promoterId) && promoterId!==audio.owner_id) {
                                 isMyPromotion = true;
                             }
-                            UserImageService.getImage({image_type: 'profile', user_id: promotion.promoter_id}, {}, successUser, failure);
+                            loadPromoterDetails(promoterId, audio.owner_id);
+                            //UserImageService.getImage({image_type: 'profile', user_id: promotion.promoter_id}, {}, successUser, failure);
                         });
                     } else {
                         setAudioIcon();
@@ -452,39 +472,43 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 var type = $rootScope.failure;
                 $rootScope.addMessage(msg, type);
             };
+            
+            var loadPromoterDetails = function(promoterID, audioOwnerId){
+                var successUser = function (data) {
 
-            var successUser = function (data) {
+                    var user = {};
 
-                var user = {};
-
-                if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
-                    user.imageURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
-                    user.id = data.user_images[data.user_images.length - 1].user_id;
-                } else {
-                    user.imageURL = "";
-                    user.id = promoterId;
-                }
-                
-                 if (!$rootScope.promoterExists(user.id) && userId === $rootScope.trackLoadData.ownerId) {
-                    $rootScope.promotersIds.push(user.id);
-                    $rootScope.promoters.push(user);
-                } else {
-                    var index = $rootScope.promotersIds.indexOf(user.id);
-                    if (index >= 0) {
-                        var oldUser = $rootScope.promoters[index];
-                        if (oldUser.imageURL === "" && user.imageURL !== "") {
-                            $rootScope.promoters[index] = user;
-                        }
+                    if (data.user_images!==undefined && data.user_images!==null && data.user_images.length > 0) {
+                        user.imageURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
+                        user.id = data.user_images[data.user_images.length - 1].user_id;
+                    } else {
+                        user.imageURL = "";
+                        user.id = promoterID;
                     }
-                }
+                 
+                 if (!$rootScope.promoterExists(user.id) && (userId===undefined || userId === $rootScope.trackLoadData.ownerId) && $rootScope.trackLoadData.ownerId!==user.id) {
+                        $rootScope.promotersIds.push(user.id);
+                        $rootScope.promoters.push(user);                        
+                    } else {
+                        var index = $rootScope.promotersIds.indexOf(user.id);
+                        if (index >= 0) {
+                            var oldUser = $rootScope.promoters[index];
+                            if (oldUser.imageURL === "" && user.imageURL !== "") {
+                                $rootScope.promoters[index] = user;
+                            }
+                        }
+                    }                    
+                    if(audioOwnerId!==user.id){
+                        promoters.push(user);
+                    }
+                    i = i + 1;
 
-                promoters.push(user);
-                i = i + 1;
-                
-                if (parseInt(totalPromoters) === parseInt(i)) {
-                    setAudioIcon();
-                }
+                    if (parseInt(totalPromoters) === parseInt(i)) {
+                        setAudioIcon();
+                    }
 
+                };
+                UserImageService.getImage({image_type: 'profile', user_id: promoterID}, {}, successUser, failure);
             };
 
             var setAudioIcon = function () {
@@ -722,7 +746,7 @@ promodControllers.controller('TrackController', ['$scope', '$rootScope', '$http'
                 $rootScope.isMyProfile = false;
                 $rootScope.section = 1;
                 $scope.selectedPromoterId=$rootScope.trackLoadData.promoter.id;
-                $scope.loadPromoterTracks($rootScope.trackLoadData.promoter);
+                $scope.loadPromoterTracks($rootScope.trackLoadData.promoter);                
                 //alert("other users track id=" + $rootScope.trackLoadData.ownerId);
             } else {
                 //show current user(own) tracks  

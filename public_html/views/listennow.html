@@ -53,15 +53,15 @@
             <!--carousel--> 
         </div>
         <div class="text-center col-xs-10 col-xs-offset-1">
-            <h3 class="text-center promoters-list">Promoters</h3>
-            <ul id="user-profile" style="margin-top:10px">
+            <h3 class="text-center promoters-list">Promoters</h3>            
+            <ul id="user-profile" style="margin-top:10px">                
                 <li ng-repeat="promoter in currentTrack.promoters" ng-if="$index < 5">
                     <img ng-click="loadAudioTracksV1(promoter.id, false, promoter)" ng-src="{{promoter.imageURL !== '' && promoter.imageURL|| $parent.DEFAULT.TRACK_IMAGE_URL}}" class="img-responsive-icon img-circle pointer"/><img src="images/tickmark.png" class="tickmark"/>
                 </li>
                 <li class="brand-col  pointer" ng-click="showAllPromoters(currentTrack.promoters);" ng-if="currentTrack.promoters.length > 5">
                     <div class="text"><span>+{{currentTrack.promoters.length - 5}}</span></div>
                 </li>
-                <li class="brand-col  pointer" ng-if="currentTrack.promoters.lenth === 0">
+                <li class="brand-col  pointer" ng-if="currentTrack.promoters.length === 0">
                     <div class="text"> <span>0</span></div>
                 </li>
             </ul>

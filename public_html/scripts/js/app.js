@@ -282,6 +282,22 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function (
             return n_body && (!n_result || (n_result > n_body)) ? n_body : n_result;
         }
 
+        $rootScope.removeDuplicatePromotions = function(promotionList){
+            var promoterIds = [], //to collect promoter_id values 
+            newPromotionList = []; //collect unique object
+
+            $.each(promotionList, function (index, promotion) {
+                if ($.inArray(promotion.promoter_id, promoterIds) === -1) { //check if id value not exits than add it
+                    promoterIds.push(promotion.promoter_id);//push promoter_id value in promoterIds
+                    newPromotionList.push(promotion); //put object in newPromotionList to access it's all values
+                }
+            });
+//            console.log("NEW PROMOTION LIST = "+JSON.stringify(newPromotionList)); //you can access it values like newPromotionList[index].keyName            
+//            console.log("NEW PROMOTION LIST LENGTH ="+newPromotionList.length);
+            return newPromotionList;
+        };
+
+
         $rootScope.isDirectPromotion = false;
         $rootScope.backup = {};
         $rootScope.backupPromoteTrack = function (promoteTrack, promoterInfo) {
@@ -303,7 +319,19 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function (
             $rootScope.promoterInfo = $rootScope.backup.promoterInfo;
         };
 
-        $rootScope.promotePlayingTrack = function () {
+        $rootScope.promotePlayingTrack = function () {            
+            var isMyPromotion = false;
+            angular.forEach($rootScope.promoteTrack.promoters, function(promoter){
+                if($rootScope.isCurrentUserId(promoter.id)){
+                    isMyPromotion = true;                   
+                }                
+            });
+            
+            if($rootScope.promoteTrack.isMyPromotion === true || isMyPromotion===true){
+                $rootScope.showAlertMessage("You already have promoted this track.");
+                return;
+            };
+            
             if ($rootScope.isDirectPromotion === true) {
                 $rootScope.isDirectPromotion === false;
                 $rootScope.loadPromoteTrackFromBackup();
@@ -312,6 +340,11 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function (
         };
 
         $rootScope.openPromoteTrackModal = function () {
+            if($rootScope.isCurrentUserId($rootScope.promoteTrack.ownerId)){
+                $rootScope.showAlertMessage("You can't promote your own track.");
+                return;
+            }
+            
             if ($rootScope.promotionStatus === 1) {
                 alert("Try later!\nLast promotion request is not yet completed");
                 return;
@@ -603,7 +636,8 @@ promod.run(['$rootScope', '$timeout', '$location', 'CommonOperation', function (
             TRACK_ALBUM: 'Default Album',
             TRACK_TITLE: 'Unknown Song',
             TRACK_ICON_URL: 'images/listn-now.png',
-            TRACK_IMAGE_URL: 'images/cover-image.jpg'
+            TRACK_IMAGE_URL: 'images/default-profile-pic.png'//'images/cover-image.jpg'
+            
         };
         $rootScope.CONSTANTS = {
             SONG_CREDIT_DURATION: 30, //in seconds

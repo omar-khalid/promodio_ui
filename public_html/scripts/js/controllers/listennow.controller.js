@@ -248,12 +248,14 @@ promodControllers.controller('ListennowController', ['$scope', '$interval', '$ro
                 if (data.promotions !== undefined) {
 
                     $scope.promotions = data.promotions;
+                    $scope.promotions = $rootScope.removeDuplicatePromotions($scope.promotions);//remove duplicate promotion by the same user
                     totalPromoters = $scope.promotions.length;
                     if (totalPromoters > 0) {
                         angular.forEach($scope.promotions, function(promotion) {
 
                             promoterId = promotion.promoter_id;
-                            UserImageService.getImage({image_type: 'profile', user_id: promotion.promoter_id}, {}, successUser, failure);
+                            loadPromoterDetails(promoterId);
+                            //UserImageService.getImage({image_type: 'profile', user_id: promotion.promoter_id}, {}, successUser, failure);
                         });
                     } else {
                         setTrack();
@@ -272,30 +274,35 @@ promodControllers.controller('ListennowController', ['$scope', '$interval', '$ro
                 var type = $rootScope.failure;
                 $rootScope.addMessage(msg, type);
             };
+            
+            var loadPromoterDetails = function(promoterID){    
+                var successUser = function(data) {
 
-            var successUser = function(data) {
+                    var user = {};
 
-                var user = {};
+                    if (data.user_images.length > 0) {
+                        user.imageURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
+                        user.id = data.user_images[data.user_images.length - 1].user_id;
+                    } else {
+                        user.imageURL = "";
+                        user.id = promoterID;
+                    }
+                    //console.log("image====== "+JSON.stringify(data));
+                    //if(!promoterExists(user.id)){ 
+                    if(audioData.ownerId!== user.id){
+                        promoterIds.push(user.id);
+                        promoters.push(user);
+                    }
+                    //}                
 
-                if (data.user_images.length > 0) {
-                    user.imageURL = $rootScope.apipath + data.user_images[data.user_images.length - 1].image_url;
-                    user.id = data.user_images[data.user_images.length - 1].user_id;
-                } else {
-                    user.imageURL = "";
-                    user.id = promoterId;
-                }
-                //console.log("image====== "+JSON.stringify(data));
-                //if(!promoterExists(user.id)){                    
-                promoterIds.push(user.id);
-                promoters.push(user);
-                //}                
+                    i = i + 1;
 
-                i = i + 1;
+                    if (parseInt(totalPromoters) === parseInt(i)) {
+                        setTrack();
+                    }
 
-                if (parseInt(totalPromoters) === parseInt(i)) {
-                    setTrack();
-                }
-
+                };
+                UserImageService.getImage({image_type: 'profile', user_id: promoterID}, {}, successUser, failure);
             };
 
             var setIconImage = function() {
